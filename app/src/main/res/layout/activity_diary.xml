@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="diary"
+            type="com.krm0219.mooda.data.room.DiaryData" />
+
+        <variable
+            name="viewModel"
+            type="com.krm0219.mooda.viewmodel.DiaryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_e9e9df"
+        tools:context=".view.MainActivity">
+
+        <RelativeLayout
+            android:id="@+id/layout_diary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_dot"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/layout_top_title"
+                layout="@layout/top_title"
+                app:viewModel="@{viewModel}" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/layout_top_title"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_rect_333333"
+                    android:minHeight="280dp"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:id="@+id/layout_diary_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{()->viewModel.changeDate()}"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_diary_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewModel.diaryData.day)}"
+                            android:textColor="@color/black"
+                            android:textSize="26sp"
+                            tools:text="15" />
+
+                        <TextView
+                            android:id="@+id/text_diary_day_of_the_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@{viewModel.diaryData.dayOfWeek}"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            tools:text="Mon" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center_horizontal"
+                        android:minHeight="240dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/img_diary_emoji"
+                            android:layout_width="140dp"
+                            android:layout_height="120dp"
+                            android:onClick="@{()->viewModel.changeEmoji()}"
+                            app:imageEmoji="@{viewModel.emoji}"
+                            tools:background="@drawable/gamttoek_1" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/img_diary_highlighter"
+                                android:layout_width="50dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentBottom="true"
+                                android:background="@drawable/img_bottom_line" />
+
+                            <TextView
+                                android:id="@+id/text_diary_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/black"
+                                android:textSize="22sp"
+                                app:textEmoji="@{viewModel.emoji}"
+                                tools:text="평온" />
+                        </RelativeLayout>
+
+                        <EditText
+                            android:id="@+id/edit_diary_message"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/dareahand"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            tools:text="message">
+
+                            <requestFocus />
+                        </EditText>
+                    </LinearLayout>
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

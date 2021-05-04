@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">MOODA</string>
+
+    <string name="fab_content_desc">+</string>
+    <string name="text_emoji_1">그냥 그래</string>
+    <string name="text_emoji_2">기뻐</string>
+    <string name="text_emoji_3">신나 ^^</string>
+    <string name="text_emoji_4">행복해</string>
+    <string name="text_emoji_5">너무 좋아</string>
+    <string name="text_emoji_6">부끄러워</string>
+    <string name="text_emoji_7">뭐 딱히,,,</string>
+    <string name="text_emoji_8">오!</string>
+    <string name="text_emoji_9">오잉?</string>
+    <string name="text_emoji_10">짜증나</string>
+    <string name="text_emoji_11">화나</string>
+    <string name="text_emoji_12">열받아!!!!</string>
+    <string name="text_emoji_13">머쓱;</string>
+    <string name="text_emoji_14">시무룩,,</string>
+    <string name="text_emoji_15">살려주,ㅓ</string>
+    <string name="text_emoji_16">핵피곤,,,,</string>
+    <string name="text_emoji_17">왕슬퍼ㅜㅜ</string>해
+    <string name="text_emoji_18">우울해..</string>
+    <string name="text_emoji_19">흥미진진!</string>
+    <string name="text_emoji_20">평온~_~</string>
+    <string name="text_emoji_21">아파ㅠㅠ</string>
+    <string name="text_emoji_22">졸려</string>
+    <string name="text_emoji_23">쿨쿨</string>
+    <string name="text_emoji_24">피곤</string>
+    <string name="text_diary_delete">일기 삭제</string>
+
+    <string name="msg_not_saved">작성된 내용이 저장되지 않아요.\n화면을 닫을까요?</string>
+    <string name="msg_diary_delete">정말로 이 일기를 삭제할까요?</string>
+
+</resources>
