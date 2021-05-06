@@ -14,7 +14,7 @@ import com.krm0219.mooda.diary.DetailListActivity
 import com.krm0219.mooda.util.KUtil
 import java.util.*
 
-class MainEmojiAdapter(private var context: Context, var pos: Int) : RecyclerView.Adapter<MainEmojiAdapter.ViewHolder>() {
+class MainEmojiAdapter1(private var context: Context, var pos: Int) : RecyclerView.Adapter<MainEmojiAdapter1.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 

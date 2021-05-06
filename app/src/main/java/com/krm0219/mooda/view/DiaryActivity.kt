@@ -1,6 +1,7 @@
 package com.krm0219.mooda.view
 
 import android.app.Activity
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.krm0219.mooda.R
 import com.krm0219.mooda.databinding.ActivityDiaryBinding
 import com.krm0219.mooda.viewmodel.DiaryViewModel
+import kotlinx.android.synthetic.main.activity_diary.*
 
 
 class DiaryActivity : AppCompatActivity() {
@@ -41,10 +43,7 @@ class DiaryActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
-
-
-
+        text_diary_day.paintFlags = text_diary_day.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
 //        viewModel.monthDataList.observe(this, Observer {
 //
@@ -62,7 +61,6 @@ class DiaryActivity : AppCompatActivity() {
 //        })
 
         viewModel.calendarEvent.observe(this, Observer {
-
             it.getContentIfNotHandled()?.let {
 
                 calendarDialog = CalendarDialog(viewModel)
@@ -71,16 +69,24 @@ class DiaryActivity : AppCompatActivity() {
         })
 
         viewModel.closeEvent.observe(this, Observer {
-
             it.getContentIfNotHandled()?.let {
 
                 dialog = AlertDialog(viewModel)
-                dialog.show(supportFragmentManager, "SampleDialog")
+                dialog.show(supportFragmentManager, "alertDialog")
             }
         })
 
-        viewModel.dialogCloseEvent.observe(this, Observer {
+        viewModel.saveEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { id ->
 
+                intent.putExtra(EXTRA_DIARY_ID, id)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
+        })
+
+
+        viewModel.dialogCloseEvent.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it1 ->
 
                 if (it1) {
@@ -95,7 +101,19 @@ class DiaryActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.title.observe(this, Observer {
 
+            Log.e("krm0219", "EDIT $it \n")
+        })
+
+
+
+        viewModel.emoji.observe(this, Observer {
+
+            Log.e("krm0219", "EMOJI $it")
+            val resourceId = resources.getIdentifier("text_emoji_$it", "string", packageName)
+            text_diary_title.setText(resourceId)
+        })
     }
 
 //    private fun closeDialog(isCancel: Boolean) {
@@ -122,6 +140,7 @@ class DiaryActivity : AppCompatActivity() {
     companion object {
 
         const val EXTRA_EMOJI = "EXTRA_EMOJI"
+        const val EXTRA_DIARY_ID = "EXTRA_DIARY_ID"
         const val REQUEST_ADD_DIARY = 1000
     }
 }

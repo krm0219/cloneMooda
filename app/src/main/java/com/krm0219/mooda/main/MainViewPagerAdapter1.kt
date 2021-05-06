@@ -32,7 +32,7 @@ class MainViewPagerAdapter1(private var context: Context) : RecyclerView.Adapter
 
         val gridLayoutManager = GridLayoutManager(context, 5, GridLayoutManager.VERTICAL, false)
         holder.recyclerview_main.layoutManager = gridLayoutManager
-        val adapter = MainEmojiAdapter(context, position)
+        val adapter = MainEmojiAdapter1(context, position)
         holder.recyclerview_main.adapter = adapter
     }
 

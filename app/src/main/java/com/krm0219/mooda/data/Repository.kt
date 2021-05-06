@@ -2,16 +2,18 @@ package com.krm0219.mooda.data
 
 import android.app.Application
 import android.util.Log
-import com.krm0219.mooda.data.room.DiaryData
 import com.krm0219.mooda.data.room.DiaryDAO
+import com.krm0219.mooda.data.room.DiaryData
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 // 데이터 소스를 접근하는데 필요한 로직을 캡슐화
 // viewModel 에서는 Repository 를 통해 데이터에 접근
 class Repository(application: Application) {
 
+    companion object {
+        val TAG = "Repository"
+    }
 
     private var diaryDao: DiaryDAO
 
@@ -24,15 +26,19 @@ class Repository(application: Application) {
 
     fun insertDiary(entity: DiaryData) {
 
-        Observable.just(entity)
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-
-                diaryDao.insert(entity)
-            }, {
-
-                Log.e("Exception", "Error $it")
-            })
+        diaryDao.insert(entity)
+        Log.e("Repository", "insertDiary")
+//
+//        Observable.just(entity)
+//            .subscribeOn(Schedulers.io())
+//            .subscribe({
+//
+//                diaryDao.insert(entity)
+//                Log.e("Repository", "insertDiary")
+//            }, {
+//
+//                Log.e("Exception", "Error $it")
+//            })
     }
 
     fun updateDiary(entity: DiaryData) {
@@ -48,6 +54,14 @@ class Repository(application: Application) {
             })
     }
 
+
+    fun deleteDiaryById(id: Long) {
+
+        diaryDao.deleteById(id)
+        Log.e("Repository", "deleteDiary")
+    }
+
+
     fun deleteDiary(entity: DiaryData) {
 
         Observable.just(entity)
@@ -61,62 +75,39 @@ class Repository(application: Application) {
             })
     }
 
-    fun getDiary(id: String): Single<DiaryData> {
+    fun deleteAllDiary() {
 
-        return diaryDao.getDiaryById(Integer.parseInt(id))
+        diaryDao.deleteAll()
+        Log.e(TAG, "deleteAllDiary")
     }
 
 
-//    fun getAll(): LiveData<List<Diary>> {
-//
-//        return todos
-//    }
-//
-//    fun insert(todo: Todo) {
-//
-//        Observable.just(todo)
-//            .subscribeOn(Schedulers.io())
-//            .subscribe({
-//
-//                todoDao.insert(todo)
-//            }, {
-//
-//                Log.e("Exception", "Error $it")
-//            })
-//    }
-//
-//    fun delete(todo: Todo) {
-//
-//        todoDao.delete(todo)
-//    }
-//
-//
-//    private val retrofit: Retrofit = RetrofitAPI.getInstance()
-//    private val api = retrofit.create(BaseService::class.java)
-//
-//    fun getMovieData(): LiveData<List<Movie>> {
-//
-//        val data = MutableLiveData<List<Movie>>()
-//
-//        api.getUpcomingMovie().enqueue(object : Callback<UpComingMovie> {
-//            override fun onFailure(call: Call<UpComingMovie>, t: Throwable) {
-//                t.stackTrace
-//            }
-//
-//            override fun onResponse(call: Call<UpComingMovie>, response: Response<UpComingMovie>) {
-//                data.value = response.body()!!.movieList
-//
-//            }
-//        })
-//
-//        return data
-//    }
-//
-//
-//    private val githubClient = RetrofitAPI.client
-//
-//    suspend fun getRepositories(query: String) {
-//
-//        githubClient?.getRepositories(query)
-//    }
+    fun selectAll(): List<DiaryData> {
+
+        return diaryDao.selectAll()
+    }
+
+
+    fun selectDiaryById(id: Long): DiaryData {
+
+        return diaryDao.selectDiaryById(id)
+    }
+
+    fun selectIdByDate(year: Int, month: Int, day: Int): Long {
+
+        return diaryDao.selectIdByDate(year, month, day)
+    }
+
+    fun selectByDate(year: Int, month: Int, day: Int): DiaryData {
+
+        return diaryDao.selectByDate(year, month, day)
+    }
+
+
+    fun selectListByDate(year: Int, month: Int): List<DiaryData> {
+
+        return diaryDao.selectListByDate(year, month)
+    }
+
+
 }

@@ -46,9 +46,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="16dp"
-                android:onClick="@{() -> viewModel.onClickEvent()}"
                 android:backgroundTint="@color/black"
-                android:contentDescription="@string/fab_content_desc" />
+                android:contentDescription="@string/fab_content_desc"
+                android:onClick="@{() -> viewModel.onClickEvent()}" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.developerMode()}"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true" />
         </RelativeLayout>
 
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.krm0219.mooda.viewmodel.DeveloperModeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_e9e9df"
+        tools:context=".view.DeveloperModeActivity">
+
+        <include
+            android:id="@+id/layout_top_title"
+            layout="@layout/top_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_developer_divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_f7d6d7ca"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_top_title" />
+        <!-- DB Delete -->
+        <RelativeLayout
+            android:id="@+id/layout_developer_db_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_developer_divider1">
+
+            <TextView
+                android:id="@+id/text_developer_server_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="DB DELETE"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:onClick="@{()->viewModel.deleteDB()}"
+                android:text="DELETE" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_developer_divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_f7d6d7ca"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_developer_db_delete" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

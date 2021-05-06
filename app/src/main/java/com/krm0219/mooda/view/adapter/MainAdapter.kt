@@ -8,13 +8,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.krm0219.mooda.R
 import com.krm0219.mooda.data.MonthData
+import com.krm0219.mooda.data.room.DiaryData
 import com.krm0219.mooda.databinding.ItemMainMonthBinding
+import com.krm0219.mooda.main.MainEmojiAdapter1
 import com.krm0219.mooda.viewmodel.MainViewModel
 
 // Month 단위로 움직임
 class MainAdapter(private var viewModel: MainViewModel) : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     var months: List<MonthData> = listOf()
+    lateinit var adapter: MainEmojiAdapter
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -47,8 +51,14 @@ class MainAdapter(private var viewModel: MainViewModel) : RecyclerView.Adapter<M
             binding.data = month
             binding.viewModel = viewModel
             binding.executePendingBindings()
+
+            adapter = MainEmojiAdapter(viewModel, month.items)
+            binding.recyclerviewMain.adapter = adapter
         }
     }
+
+
+
 
 
     companion object MonthDiffUtil : DiffUtil.ItemCallback<MonthData>() {

@@ -22,7 +22,6 @@ class MainActivity1 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         // 이번달 기준
         val present = KUtil.getMainListData(Calendar.getInstance())
         present.isPresent = true

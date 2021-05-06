@@ -122,7 +122,7 @@ class DiaryEditActivity : AppCompatActivity() {
             diaryDataData.message = edit_diary_message.text.toString()
 
 
-            diaryDataData.id = dbID
+         //   diaryDataData.id = dbID
             calendarData!!.diaryEntity = diaryDataData
 
 
@@ -130,11 +130,11 @@ class DiaryEditActivity : AppCompatActivity() {
 
                 AppDatabase.getInstance(this@DiaryEditActivity)!!.diaryDao().insert(diaryDataData)
 
-                val intent = Intent()
-                intent.putExtra("edit_diary_id", diaryDataData.id)
-                setResult(Activity.RESULT_OK, intent)
-                overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_slide_down)
-                finish()
+//                val intent = Intent()
+//                intent.putExtra("edit_diary_id", diaryDataData.id)
+//                setResult(Activity.RESULT_OK, intent)
+//                overridePendingTransition(R.anim.anim_slide_up, R.anim.anim_slide_down)
+//                finish()
             }
         }
 
@@ -224,7 +224,7 @@ class DiaryEditActivity : AppCompatActivity() {
             text_diary_title.setText(resourceId1)
         } else {
 
-            text_diary_title.text = calendarData!!.diaryEntity.title
+          //  text_diary_title.text = calendarData!!.diaryEntity.title
         }
 
         setHighLighter()

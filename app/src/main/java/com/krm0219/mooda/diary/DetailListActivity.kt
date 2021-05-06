@@ -94,7 +94,7 @@ class DetailListActivity : AppCompatActivity() {
 
                     text_dialog_title.visibility = View.VISIBLE
                     text_dialog_title.text = resources.getString(R.string.text_diary_delete)
-                    text_dialog_message.text = resources.getString(R.string.msg_diary_delete)
+                 //   text_dialog_message.text = resources.getString(R.string.msg_diary_delete)
 
                     clickedPosition = position
                 }

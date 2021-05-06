@@ -68,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:text="@{viewModel.diaryData.dayOfWeek}"
+                            android:text="@{viewModel.diaryData.getDayString}"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             tools:text="Mon" />
@@ -93,8 +93,8 @@
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp">
 
                             <ImageView
                                 android:id="@+id/img_diary_highlighter"
@@ -103,17 +103,19 @@
                                 android:layout_alignParentBottom="true"
                                 android:background="@drawable/img_bottom_line" />
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/text_diary_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
+                                android:background="@android:color/transparent"
+                                android:fontFamily="@font/dareahand"
+                                android:text="@={viewModel.title}"
                                 android:textColor="@color/black"
                                 android:textSize="22sp"
-                                app:textEmoji="@{viewModel.emoji}"
                                 tools:text="평온" />
                         </RelativeLayout>
-
+                        <!--                        app:textEmoji="@{viewModel.emoji}"-->
                         <EditText
                             android:id="@+id/edit_diary_message"
                             android:layout_width="match_parent"
@@ -122,6 +124,7 @@
                             android:background="@android:color/transparent"
                             android:fontFamily="@font/dareahand"
                             android:gravity="center"
+                            android:text="@={viewModel.content}"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             tools:text="message">

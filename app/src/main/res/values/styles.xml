@@ -6,7 +6,7 @@
 
         <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="android:buttonStyle">@style/ButtonStyle</item>
-        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
     </style>
 
     <style name="Theme.AppCompat.Transparent">
@@ -44,7 +44,7 @@
     </style>
 
     <style name="customEditTextFontStyle" parent="@android:style/Widget.DeviceDefault.EditText">
-        <item name="android:fontFamily">@font/dareahand</item>
+        <item name="android:fontFamily">@font/drfont_daraehand_basic</item>
     </style>
 
 

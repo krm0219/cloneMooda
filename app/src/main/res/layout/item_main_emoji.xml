@@ -21,16 +21,17 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="72dp"
-        android:layout_height="72dp">
+        android:layout_width="67dp"
+        android:layout_height="66dp"
+        android:onClick="@{()->viewModel.clickEmojiItem(diary.id)}">
 
         <ImageView
             android:id="@+id/img_main_emoji_item"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:imageEmoji="@{diary.emojiId}"
+            android:layout_width="67dp"
+            android:layout_height="58dp"
+            app:imageEmoji="@{diary.emoji}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/emoji1" />
+            tools:background="@drawable/gamttoek_1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

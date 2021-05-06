@@ -23,32 +23,32 @@
             <ImageView
                 android:id="@+id/img_splash_emoji1"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/emoji1" />
+                android:layout_height="26dp"
+                android:background="@drawable/gamttoek_2" />
 
             <ImageView
                 android:id="@+id/img_splash_emoji2"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/emoji3" />
+                android:layout_height="26dp"
+                android:background="@drawable/gamttoek_4" />
 
             <ImageView
                 android:id="@+id/img_splash_emoji3"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/emoji9" />
+                android:layout_height="26dp"
+                android:background="@drawable/gamttoek_7" />
 
             <ImageView
                 android:id="@+id/img_splash_emoji4"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/emoji8" />
+                android:layout_height="26dp"
+                android:background="@drawable/gamttoek_11" />
 
             <ImageView
                 android:id="@+id/img_splash_emoji5"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/emoji7" />
+                android:layout_height="26dp"
+                android:background="@drawable/gamttoek_17" />
         </LinearLayout>
 
         <TextView

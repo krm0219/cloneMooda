@@ -29,8 +29,10 @@
 
         <activity android:name=".view.MainActivity" />
         <activity android:name=".view.DiaryActivity" />
+        <activity android:name=".view.DeveloperModeActivity" />
+        <activity android:name=".view.ListActivity" />
 
-        
+
         <activity android:name=".diary.DetailListActivity" />
 
         <activity android:name=".diary.DiaryActivity2" />

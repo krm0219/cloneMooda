@@ -16,15 +16,6 @@ fun loadImage(imageView: ImageView, emoji: Int?) {
     imageView.setBackgroundResource(resourceId)
 }
 
-@BindingAdapter("textEmoji")
-fun loadText(textView: TextView, emoji: Int?) {
-
-    val context = textView.context
-    val packageName = context.packageName
-    val resourceId = context.resources.getIdentifier("text_emoji_$emoji", "string", packageName)
-    textView.text = context.getText(resourceId)
-}
-
 
 @BindingAdapter("android:visibleIf")
 fun View.setVisibleIf(value: Boolean) {

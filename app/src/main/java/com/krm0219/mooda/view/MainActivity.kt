@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val viewModel: MainViewModel by viewModels()
 
+    lateinit var adapter: MainAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // setContentView(R.layout.activity_main)
@@ -33,8 +35,8 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        setRecyclerView()
 
+        setRecyclerView()
 
 
         viewModel.addEvent.observe(this, Observer {
@@ -47,13 +49,38 @@ class MainActivity : AppCompatActivity() {
                 //  startActivityForResult(intent, DiaryActivity.REQUEST_ADD_DIARY)
             }
         })
+
+        viewModel.developerEvent.observe(this, Observer {
+
+            it.getContentIfNotHandled()?.let {
+
+                val intent = Intent(this, DeveloperModeActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
+
+        viewModel.itemClickEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it1 ->
+
+                val intent = Intent(this, ListActivity::class.java)
+                intent.putExtra(ListActivity.EXTRA_DIARY_ID, it1)
+                startActivity(intent)
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.e("MainActivity", "onResume")
+        viewModel.setMonthData()
     }
 
 
     private fun setRecyclerView() {
 
-        val adapter = MainAdapter(viewModel)
-
+        adapter = MainAdapter(viewModel)
         binding.viewPagerMain.adapter = adapter
 
 
@@ -80,9 +107,30 @@ class MainActivity : AppCompatActivity() {
 
         if (result.resultCode == Activity.RESULT_OK) {
 
+            Log.e("MainActivity", "requestActivity")
+            val addId = result.data?.getLongExtra(DiaryActivity.EXTRA_DIARY_ID, -1)
+            //  viewModel.getData()
+
+
+//            adapter.setMonthList(it)
+//
+//            var position = 0
+//            for (index in it.indices) {
+//
+//                if (Preferences.thisMonth == it[index].month) {
+//                    position = index
+//                }
+//            }
+//
+//            view_pager_main.setCurrentItem(position, false)
+
+
             //   val addId = result.data?.getIntExtra("add_diary_id", -1)
 
             Log.e("krm0219", "onActivityResult   RESULT_OK")
+
+
+            //    adapter.addDiaryData(2021, 4, dia)
 
 //            CoroutineScope(Dispatchers.IO).launch {
 //

@@ -2,25 +2,24 @@ package com.krm0219.mooda.data.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.krm0219.mooda.util.KUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Entity(tableName = "DIARY")
 data class DiaryData(
-    @PrimaryKey(autoGenerate = true) var id: Int,
+    @PrimaryKey(autoGenerate = true) var id: Long,
+    @ColumnInfo(name = "date") var date: String,
     @ColumnInfo(name = "year") var year: Int,
     @ColumnInfo(name = "month") var month: Int,
     @ColumnInfo(name = "day") var day: Int,
     @ColumnInfo(name = "dayOfWeek") var dayOfWeek: String,
     @ColumnInfo(name = "emoji") var emoji: Int,
-    @Ignore var emojiId: Int,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "message") var message: String
 ) {
-    constructor() : this(0, 0, 0, 0, "", 0, 0, "", "")
-
+    constructor() : this(0, "", 0, 0, 0, "", 0, "", "")
 
     fun getMonthString(): String {
 
@@ -31,5 +30,10 @@ data class DiaryData(
         val formatter = SimpleDateFormat("MMMM", Locale.ENGLISH)
 
         return formatter.format(date).toUpperCase(Locale.getDefault())
+    }
+
+    fun getDayString(): String {
+
+        return KUtil.getDayOfWeekName(day)
     }
 }

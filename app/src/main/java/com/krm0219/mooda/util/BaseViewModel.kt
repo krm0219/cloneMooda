@@ -4,17 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.krm0219.mooda.data.Repository
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel protected constructor(application: Application) : AndroidViewModel(application) {
 
     protected val repository: Repository = Repository(application)
-
-
-
-
 
 
     private val compositeDisposable = CompositeDisposable()
