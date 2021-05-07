@@ -24,13 +24,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp">
 
         <RelativeLayout
-            android:id="@+id/layout_list_diary"
+            android:id="@+id/layout_item_diary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@drawable/border_rect_333333"
+            android:minHeight="300dp"
             android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +55,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="8dp"
                     android:text="@{diary.getDayString}"
                     android:textColor="@color/black"
                     android:textSize="12sp"
@@ -85,25 +87,22 @@
                     tools:text="평온" />
 
                 <TextView
-                    android:id="@+id/edit_diary_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:text="@{diary.message}"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-                    tools:text="message\nmessage" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_list_diary">
+            app:layout_constraintTop_toBottomOf="@id/layout_item_diary">
 
             <FrameLayout
                 android:layout_width="36dp"

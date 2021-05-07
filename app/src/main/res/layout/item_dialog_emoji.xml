@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="clickedPosition"
+            type="Integer" />
+
+        <variable
+            name="viewModel"
+            type="com.krm0219.mooda.viewmodel.DiaryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="98dp"
+        android:layout_height="101dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="74dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:onClick="@{()->viewModel.clickEmoji(position)}"
+                app:clicked="@{clickedPosition}"
+                app:emoji="@{position}"
+                tools:background="@drawable/gamttoek_2" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

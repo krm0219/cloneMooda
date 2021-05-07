@@ -21,6 +21,10 @@ class ListViewModel(application: Application, id: Long) : BaseViewModel(applicat
     val position: MutableLiveData<Int>
         get() = _position
 
+    private val _title = MutableLiveData<String>()
+    val title: MutableLiveData<String>
+        get() = _title
+
 
     private val _editEvent = MutableLiveData<Event<Long>>()
     val editEvent: MutableLiveData<Event<Long>>
@@ -40,30 +44,51 @@ class ListViewModel(application: Application, id: Long) : BaseViewModel(applicat
         get() = _dialogCloseEvent
 
 
+    var diaryList: List<DiaryData> = listOf()
     private val diaryId: Long = id
     private var deleteId = 0L
 
     init {
 
+        _position.value = 0
     }
 
 
     fun setDiaryData() {
 
-        val diaryList = repository.selectAll()
-
+        diaryList = repository.selectAll()
         _diaryDataList.value = diaryList
 
+        if (_position.value == 0) {
+            for (index in diaryList.indices) {
 
-        for (index in diaryList.indices) {
+                if (diaryList[index].id == diaryId) {
 
-            if (diaryList[index].id == diaryId) {
-
-                _position.value = index
-                break
+                    _position.value = index
+                    break
+                }
             }
+        } else {
+
+            var pos = _position.value!!.minus(1)
+
+            if (pos < diaryList.size) {
+
+                pos = 0
+            }
+
+            _position.value = pos
         }
+
+        setTitle(_position.value!!)
     }
+
+    fun setTitle(position: Int) {
+
+        val diary = repository.selectDiaryById(diaryList[position].id)
+        _title.value = "${diary.getMonthString()} ${diary.year}"
+    }
+
 
     fun clickEdit(position: Int) {
 

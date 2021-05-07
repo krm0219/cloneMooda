@@ -1,9 +1,11 @@
 package com.krm0219.mooda.view
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,6 +14,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.krm0219.mooda.R
 import com.krm0219.mooda.databinding.ActivityDiaryBinding
+import com.krm0219.mooda.view.dialog.CalendarDialog
+import com.krm0219.mooda.view.dialog.CloseAlertDialog
+import com.krm0219.mooda.view.dialog.EmojiDialog
 import com.krm0219.mooda.viewmodel.DiaryViewModel
 import kotlinx.android.synthetic.main.activity_diary.*
 
@@ -29,8 +34,11 @@ class DiaryActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var dialog: AlertDialog
+    private lateinit var dialogClose: CloseAlertDialog
     private lateinit var calendarDialog: CalendarDialog
+    private lateinit var emojiDialog: EmojiDialog
+
+    private lateinit var imm: InputMethodManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +52,8 @@ class DiaryActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
         text_diary_day.paintFlags = text_diary_day.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(edit_diary_message, 0)
 //        viewModel.monthDataList.observe(this, Observer {
 //
 //            adapter.setMonthList(it)
@@ -64,15 +73,42 @@ class DiaryActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let {
 
                 calendarDialog = CalendarDialog(viewModel)
-                calendarDialog.show(supportFragmentManager, "SampleDialog")
+                calendarDialog.show(supportFragmentManager, "calendarDialog")
             }
         })
 
+        // Emoji
+        viewModel.emojiEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+
+                emojiDialog = EmojiDialog(viewModel)
+                emojiDialog.show(supportFragmentManager, "emojiDialog")
+
+                viewModel.initEmojiCount()
+            }
+        })
+
+        viewModel.emojiClicked.observe(this, Observer {
+
+            if (it != 0) {
+
+                emojiDialog.clickedEmoji(it)
+            }
+        })
+
+        viewModel.emojiDialogCloseEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { position ->
+
+                emojiDialog.dismiss()
+            }
+        })
+
+        //
         viewModel.closeEvent.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
 
-                dialog = AlertDialog(viewModel)
-                dialog.show(supportFragmentManager, "alertDialog")
+                dialogClose = CloseAlertDialog(viewModel)
+                dialogClose.show(supportFragmentManager, "alertDialog")
             }
         })
 
@@ -91,12 +127,12 @@ class DiaryActivity : AppCompatActivity() {
 
                 if (it1) {
 
-                    dialog.dismiss()
+                    dialogClose.dismiss()
                     setResult(Activity.RESULT_CANCELED)
                     finish()
                 } else {
 
-                    dialog.dismiss()
+                    dialogClose.dismiss()
                 }
             }
         })
@@ -106,8 +142,6 @@ class DiaryActivity : AppCompatActivity() {
             Log.e("krm0219", "EDIT $it \n")
         })
 
-
-
         viewModel.emoji.observe(this, Observer {
 
             Log.e("krm0219", "EMOJI $it")
@@ -115,21 +149,6 @@ class DiaryActivity : AppCompatActivity() {
             text_diary_title.setText(resourceId)
         })
     }
-
-//    private fun closeDialog(isCancel: Boolean) {
-//
-//        dialog.dismiss()
-//
-//        if (isCancel) {
-//
-//            // Main 이동
-//            setResult(Activity.RESULT_CANCELED, intent)
-//
-//            if (!isFinishing)
-//                finish()
-//        }
-//    }
-
 
     override fun onResume() {
         super.onResume()

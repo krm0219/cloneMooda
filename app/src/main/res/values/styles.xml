@@ -73,21 +73,10 @@
     </style>
 
 
-    <style name="CustomDialog" parent="AppTheme.NoActionBar">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
-    </style>
-
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
-
 
 
     <style name="Theme.Transparent" parent="android:Theme">
@@ -100,4 +89,8 @@
     </style>
 
 
+    <style name="CustomDialog" parent="@android:style/Theme.Holo.Light" >
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>

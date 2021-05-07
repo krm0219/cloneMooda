@@ -1,4 +1,4 @@
-package com.krm0219.mooda.main
+package com.krm0219.mooda.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.krm0219.mooda.R
 import com.krm0219.mooda.util.KUtil
 import com.krm0219.mooda.util.Preferences
-import com.krm0219.mooda.view.MainActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 

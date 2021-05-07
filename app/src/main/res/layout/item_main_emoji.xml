@@ -26,7 +26,6 @@
         android:onClick="@{()->viewModel.clickEmojiItem(diary.id)}">
 
         <ImageView
-            android:id="@+id/img_main_emoji_item"
             android:layout_width="67dp"
             android:layout_height="58dp"
             app:imageEmoji="@{diary.emoji}"

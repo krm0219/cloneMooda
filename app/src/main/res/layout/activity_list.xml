@@ -26,7 +26,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:id="@+id/layout_top_close"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:paddingStart="12dp"
@@ -35,19 +34,17 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/icon_arrow_l_black" />
+                    android:background="@drawable/icon_back_black" />
             </FrameLayout>
 
-            <!--            android:text="@{viewModel.diaryData.getMonthString + ' ' + viewModel.diaryData.year}"-->
             <TextView
-                android:id="@+id/text_top_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-
+                android:text="@{viewModel.title}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"

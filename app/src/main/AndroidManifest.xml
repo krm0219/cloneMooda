@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".main.MyApplication"
+        android:name=".util.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".main.SplashActivity">
+        <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,20 +29,9 @@
 
         <activity android:name=".view.MainActivity" />
         <activity android:name=".view.DiaryActivity" />
-        <activity android:name=".view.DeveloperModeActivity" />
         <activity android:name=".view.ListActivity" />
 
-
-        <activity android:name=".diary.DetailListActivity" />
-
-        <activity android:name=".diary.DiaryActivity2" />
-        <activity android:name=".diary.DiaryEditActivity" />
-
-        <activity android:name=".diary.DefaultDialog" />
-
-
-        <activity android:name=".diary.DiaryActivity1" />
-
+        <activity android:name=".view.DeveloperModeActivity" />
 
         <activity android:name=".test.CameraActivity" />
     </application>

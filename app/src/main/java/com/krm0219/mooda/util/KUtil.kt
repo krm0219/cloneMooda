@@ -20,10 +20,6 @@ class KUtil {
         val REQUEST_LIST_DIARY = 1400
 
 
-
-
-
-
         fun getMainListData(calendar: Calendar): MoodaData {
 
             val data = MoodaData()
@@ -48,13 +44,13 @@ class KUtil {
             data.day = calendar.get(Calendar.DATE)
             data.dayOfWeek = getDayOfWeekName(calendar.get(Calendar.DATE))
 
-        //    Log.e("krm0219", "data  > ${data.monthName} / ${data.dayOfWeek}  / ${calendar.time}")
+            //    Log.e("krm0219", "data  > ${data.monthName} / ${data.dayOfWeek}  / ${calendar.time}")
 
             return data
         }
 
 
-         fun getMonthName(month: Int): String {
+        fun getMonthName(month: Int): String {
 
             val calendar = Calendar.getInstance()
             calendar.set(Calendar.MONTH, month)
@@ -65,7 +61,7 @@ class KUtil {
             return formatter.format(date).toUpperCase(Locale.getDefault())
         }
 
-         fun getDayOfWeekName(day: Int): String {
+        fun getDayOfWeekName(day: Int): String {
 
             val calendar = Calendar.getInstance()
             calendar.set(Calendar.DATE, day)
@@ -80,6 +76,27 @@ class KUtil {
         fun dpToPx(context: Context, dp: Float): Float {
             return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics)
         }
+
+        fun PxToDp(context: Context, px: Float): Float {
+
+            var density = context.resources.displayMetrics.density
+            Log.e("Util", "PxToDp  denistiry $density")
+
+            when (density) {
+                1.0F -> {
+                    density *= 4.0F
+                }
+                1.5F -> {
+                    density *= (8 / 3)
+                }
+                2.0F -> {
+                    density *= 2.0F
+                }
+            }
+
+            return px / density
+        }
+
     }
 
 

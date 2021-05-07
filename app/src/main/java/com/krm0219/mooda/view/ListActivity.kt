@@ -13,9 +13,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.krm0219.mooda.R
 import com.krm0219.mooda.databinding.ActivityListBinding
+import com.krm0219.mooda.util.VisiblePositionChangeListener
 import com.krm0219.mooda.view.adapter.ListAdapter
+import com.krm0219.mooda.view.dialog.DeleteAlertDialog
 import com.krm0219.mooda.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_list.*
 
@@ -69,6 +72,7 @@ class ListActivity : AppCompatActivity() {
             it.getContentIfNotHandled()?.let {
 
                 finish()
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right)
             }
         })
 
@@ -79,8 +83,7 @@ class ListActivity : AppCompatActivity() {
                 if (isDelete) {
 
                     dialog.dismiss()
-                    setResult(Activity.RESULT_CANCELED)
-                    finish()
+                    viewModel.setDiaryData()
                 } else {
 
                     dialog.dismiss()
@@ -91,11 +94,15 @@ class ListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        Log.e(TAG, "onResume")
         viewModel.setDiaryData()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        finish()
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right)
+    }
 
     private fun setRecyclerView() {
 
@@ -103,19 +110,23 @@ class ListActivity : AppCompatActivity() {
         binding.recyclerviewList.adapter = adapter
 
 
+        recyclerview_list.addOnScrollListener(VisiblePositionChangeListener(recyclerview_list.layoutManager as LinearLayoutManager?,
+            object : VisiblePositionChangeListener.OnChangeListener {
+                override fun onFirstVisiblePositionChanged(position: Int) {
+
+                    viewModel.setTitle(position)
+                }
+
+                override fun onFirstInvisiblePositionChanged(position: Int) {
+
+                    viewModel.setTitle(position + 1)
+                }
+            }
+        ))
+
         viewModel.diaryDataList.observe(this, Observer {
 
             adapter.setDiaryList(it)
-
-//            var position = 0
-//            for (index in it.indices) {
-//
-//                if (Preferences.thisMonth == it[index].month) {
-//                    position = index
-//                }
-//            }
-//
-//            view_pager_main.setCurrentItem(position, false)
         })
 
 

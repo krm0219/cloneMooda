@@ -1,6 +1,5 @@
 package com.krm0219.mooda.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,9 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.krm0219.mooda.R
 import com.krm0219.mooda.data.MonthData
-import com.krm0219.mooda.data.room.DiaryData
 import com.krm0219.mooda.databinding.ItemMainMonthBinding
-import com.krm0219.mooda.main.MainEmojiAdapter1
 import com.krm0219.mooda.viewmodel.MainViewModel
 
 // Month 단위로 움직임
@@ -46,7 +43,6 @@ class MainAdapter(private var viewModel: MainViewModel) : RecyclerView.Adapter<M
 
             val month = months[position]
 
-            Log.e("ViewPager", "position $position // data ${months[position].month}")
             binding.position = position
             binding.data = month
             binding.viewModel = viewModel
@@ -56,9 +52,6 @@ class MainAdapter(private var viewModel: MainViewModel) : RecyclerView.Adapter<M
             binding.recyclerviewMain.adapter = adapter
         }
     }
-
-
-
 
 
     companion object MonthDiffUtil : DiffUtil.ItemCallback<MonthData>() {

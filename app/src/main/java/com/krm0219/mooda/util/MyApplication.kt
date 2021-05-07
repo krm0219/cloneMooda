@@ -1,4 +1,4 @@
-package com.krm0219.mooda.main
+package com.krm0219.mooda.util
 
 import android.app.Application
 import com.facebook.stetho.Stetho

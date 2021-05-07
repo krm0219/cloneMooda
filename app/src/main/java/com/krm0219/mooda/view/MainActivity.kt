@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, ListActivity::class.java)
                 intent.putExtra(ListActivity.EXTRA_DIARY_ID, it1)
                 startActivity(intent)
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left)
             }
         })
     }

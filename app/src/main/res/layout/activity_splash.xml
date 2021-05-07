@@ -17,44 +17,74 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="bottom"
             android:orientation="horizontal">
 
-            <ImageView
+            <FrameLayout
                 android:id="@+id/img_splash_emoji1"
-                android:layout_width="30dp"
-                android:layout_height="26dp"
-                android:background="@drawable/gamttoek_2" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
 
-            <ImageView
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/gamttoek_2" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/img_splash_emoji2"
-                android:layout_width="30dp"
-                android:layout_height="26dp"
-                android:background="@drawable/gamttoek_4" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
 
-            <ImageView
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/gamttoek_4" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/img_splash_emoji3"
-                android:layout_width="30dp"
-                android:layout_height="26dp"
-                android:background="@drawable/gamttoek_7" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
 
-            <ImageView
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/gamttoek_7" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/img_splash_emoji4"
-                android:layout_width="30dp"
-                android:layout_height="26dp"
-                android:background="@drawable/gamttoek_11" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
 
-            <ImageView
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/gamttoek_11" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/img_splash_emoji5"
-                android:layout_width="30dp"
-                android:layout_height="26dp"
-                android:background="@drawable/gamttoek_17" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/gamttoek_17" />
+            </FrameLayout>
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:text="@string/app_name"
             android:textAllCaps="false"
             android:textColor="@color/color_333333"

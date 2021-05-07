@@ -1,6 +1,5 @@
 package com.krm0219.mooda.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -42,7 +41,6 @@ class MainEmojiAdapter(private var viewModel: MainViewModel, private var diarys:
 
             val diary = diarys?.get(position)
 
-            Log.e("ViewPager", "position $position // data ${diary?.emoji}")
             binding.position = position
             binding.diary = diary
             binding.viewModel = viewModel

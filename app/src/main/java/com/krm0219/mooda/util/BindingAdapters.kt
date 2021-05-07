@@ -1,8 +1,9 @@
 package com.krm0219.mooda.util
 
+import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 
@@ -14,6 +15,30 @@ fun loadImage(imageView: ImageView, emoji: Int?) {
     val packageName = context.packageName
     val resourceId = context.resources.getIdentifier("gamttoek_$emoji", "drawable", packageName)
     imageView.setBackgroundResource(resourceId)
+}
+
+
+@BindingAdapter("emoji", "clicked")
+fun loadImageAndSized(imageView: ImageView, emoji: Int?, clicked: Int) {
+
+    val context = imageView.context
+    val packageName = context.packageName
+    val resourceId = context.resources.getIdentifier("gamttoek_$emoji", "drawable", packageName)
+    imageView.setBackgroundResource(resourceId)
+
+    if (emoji == clicked) {
+
+        imageView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+
+                imageView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                imageView.layoutParams.width = (imageView.width * 1.32).toInt()
+                imageView.layoutParams.height = (imageView.height * 1.32).toInt()
+                imageView.requestLayout()
+            }
+        })
+    }
 }
 
 

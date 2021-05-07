@@ -14,6 +14,12 @@ import java.util.*
 // Context를 갖고 있으면 메모리 누수의 원인이 된다
 class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewModel(application) {
 
+    val diary = DiaryData()
+
+    private val _diaryData = MutableLiveData<DiaryData>()
+    val diaryData: MutableLiveData<DiaryData>
+        get() = _diaryData
+
     private val _year = MutableLiveData<Int>()
     val year: MutableLiveData<Int>
         get() = _year
@@ -39,32 +45,44 @@ class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewMod
         get() = _content
 
 
-    private val _diaryData = MutableLiveData<DiaryData>()
-    val diaryData: MutableLiveData<DiaryData>
-        get() = _diaryData
+    // top_title
+    private val _closeEvent = MutableLiveData<Event<Boolean>>()
+    val closeEvent: MutableLiveData<Event<Boolean>>
+        get() = _closeEvent
 
     private val _saveEvent = MutableLiveData<Event<Long>>()
     val saveEvent: MutableLiveData<Event<Long>>
         get() = _saveEvent
 
-    private val _closeEvent = MutableLiveData<Event<Boolean>>()
-    val closeEvent: MutableLiveData<Event<Boolean>>
-        get() = _closeEvent
 
+    // emoji Dialog
+    private val _emojiEvent = MutableLiveData<Event<Int>>()
+    val emojiEvent: MutableLiveData<Event<Int>>
+        get() = _emojiEvent
+
+    private val _emojiClicked = MutableLiveData<Int>()
+    val emojiClicked: MutableLiveData<Int>
+        get() = _emojiClicked
+
+    private val _emojiDialogCloseEvent = MutableLiveData<Event<Int>>()
+    val emojiDialogCloseEvent: MutableLiveData<Event<Int>>
+        get() = _emojiDialogCloseEvent
+
+    // calendar Dialog
     private val _calendarEvent = MutableLiveData<Event<DiaryData>>()
     val calendarEvent: MutableLiveData<Event<DiaryData>>
         get() = _calendarEvent
 
-
+    // close Dialog
     private val _dialogCloseEvent = MutableLiveData<Event<Boolean>>()
     val dialogCloseEvent: MutableLiveData<Event<Boolean>>
         get() = _dialogCloseEvent
 
-    val diary = DiaryData()
 
     init {
 
         setDiaryData()
+        initEmojiCount()
 
         _emoji.value = tteokPosition
         Log.e("krm0219", "tteok ${emoji.value}")
@@ -106,14 +124,16 @@ class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewMod
 
     fun changeEmoji() {
 
-        if (_emoji.value == 24) {
-
-            _emoji.value = 1
-        } else {
-
-            _emoji.value = _emoji.value?.plus(1)
-        }
+        _emojiEvent.value = Event(_emoji.value!!)
+//        if (_emoji.value == 24) {
+//
+//            _emoji.value = 1
+//        } else {
+//
+//            _emoji.value = _emoji.value?.plus(1)
+//        }
     }
+
 
     fun cancelDiary() {
 
@@ -145,4 +165,30 @@ class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewMod
     }
 
 
+    fun initEmojiCount() {
+
+        _emojiClicked.value = 0
+    }
+
+    fun clickEmoji(position: Int) {
+
+        if (_emojiClicked.value == position) {
+            // 2번 클릭
+            emojiDialogClose(position)
+            initEmojiCount()
+        } else {
+            // 1번 클릭
+
+            _emojiClicked.value = position
+        }
+    }
+
+    fun emojiDialogClose(position: Int) {
+
+        if (position != 0) {
+
+            _emoji.value = position
+        }
+        _emojiDialogCloseEvent.value = Event(position)
+    }
 }
