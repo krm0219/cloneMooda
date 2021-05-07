@@ -17,23 +17,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent">
+        android:background="@android:color/transparent"
+        android:paddingHorizontal="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginHorizontal="20dp"
             android:background="@color/white"
-            android:minHeight="200dp"
-            android:padding="16dp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="20dp"
             tools:ignore="MissingConstraints">
 
             <TextView
                 android:id="@+id/text_calendar_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(viewModel.year)}"
+                android:layout_marginTop="16dp"
+                android:text="@{String.valueOf(viewModel.calendarData.year)}"
                 android:textSize="@dimen/size_title"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,23 +53,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_calendar_year"
-                tools:listitem="@layout/item_calendar_date" />
+                tools:listitem="@layout/item_dialog_calendar" />
 
             <Button
                 android:id="@+id/btn_calendar_close"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/icon_close_black"
+                android:onClick="@{()->viewModel.dialogCloseCalendar()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recyclerview_calendar" />
 
             <Button
                 android:id="@+id/btn_calendar_yes"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:background="@drawable/icon_check_black"
+                android:onClick="@{()->viewModel.dialogCloseCalendar()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/btn_calendar_close" />
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -113,7 +113,6 @@ class ListActivity : AppCompatActivity() {
         adapter = ListAdapter(viewModel)
         binding.recyclerviewList.adapter = adapter
 
-
         recyclerview_list.addOnScrollListener(VisiblePositionChangeListener(recyclerview_list.layoutManager as LinearLayoutManager?,
             object : VisiblePositionChangeListener.OnChangeListener {
                 override fun onFirstVisiblePositionChanged(position: Int) {

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="data"
+            type="com.krm0219.mooda.data.CalendarData1" />
+
+        <variable
+            name="viewModel"
+            type="com.krm0219.mooda.viewmodel.DiaryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/img_calendar_emoji"
+            android:layout_width="40dp"
+            android:layout_height="34dp"
+            app:imageEmoji="@{data.emoji}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/layout_calendar_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/gamttoek_1" />
+
+        <LinearLayout
+            android:id="@+id/layout_calendar_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_calendar_emoji"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginStart="48dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(data.month)}"
+                android:textColor="@color/color_333333"
+                android:textSize="18sp"
+                tools:text="2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="월 "
+                android:textColor="@color/color_333333"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(data.day)}"
+                android:textColor="@color/color_333333"
+                android:textSize="18sp"
+                tools:text="2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일 ("
+                android:textColor="@color/color_333333"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{data.dayString}"
+                android:textColor="@color/color_333333"
+                android:textSize="18sp"
+                tools:text="토" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
+                android:textColor="@color/color_333333"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

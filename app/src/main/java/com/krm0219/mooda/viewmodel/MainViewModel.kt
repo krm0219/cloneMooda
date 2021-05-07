@@ -76,7 +76,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
             data.add(MonthData(Preferences.thisYear, Preferences.thisMonth, null))
         }
 
-        monthDataList.value = data
+        _monthDataList.value = data
     }
 
     fun onClickEvent() {

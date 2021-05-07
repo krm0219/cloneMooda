@@ -40,9 +40,9 @@ class KUtil {
 
             data.year = calendar.get(Calendar.YEAR)
             data.month = calendar.get(Calendar.MONTH) + 1
-            data.monthName = getMonthName(calendar.get(Calendar.MONTH))
+           // data.monthName = getMonthName(calendar.get(Calendar.MONTH))
             data.day = calendar.get(Calendar.DATE)
-            data.dayOfWeek = getDayOfWeekName(calendar.get(Calendar.DATE))
+           // data.dayOfWeek = getDayOfWeekName(calendar.get(Calendar.DATE))
 
             //    Log.e("krm0219", "data  > ${data.monthName} / ${data.dayOfWeek}  / ${calendar.time}")
 
@@ -68,6 +68,17 @@ class KUtil {
             val date = calendar.time
 
             val formatter = SimpleDateFormat("EE", Locale.ENGLISH)
+
+            return formatter.format(date).toUpperCase(Locale.getDefault())
+        }
+
+        fun getDayOfWeekNameKorean(day: Int): String {
+
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.DATE, day)
+            val date = calendar.time
+
+            val formatter = SimpleDateFormat("EE", Locale.KOREA)
 
             return formatter.format(date).toUpperCase(Locale.getDefault())
         }

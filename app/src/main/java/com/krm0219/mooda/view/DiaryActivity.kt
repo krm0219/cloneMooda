@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_diary.*
 
 
 class DiaryActivity : AppCompatActivity() {
-    val tag = "DiaryActivity"
 
     var emoji = 0
     var diaryId = 0L
@@ -65,14 +64,69 @@ class DiaryActivity : AppCompatActivity() {
         text_diary_day.paintFlags = text_diary_day.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
+        setObserve()
+    }
 
-        viewModel.calendarEvent.observe(this, Observer {
+    override fun onResume() {
+        super.onResume()
+        Log.e(TAG, "onResume")
+    }
+
+
+    private fun setObserve() {
+
+        // Top Title
+        viewModel.closeEvent.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
 
-                calendarDialog = CalendarDialog(viewModel)
-                calendarDialog.show(supportFragmentManager, "calendarDialog")
+                dialogClose = CloseAlertDialog(viewModel)
+                dialogClose.show(supportFragmentManager, "alertDialog")
             }
         })
+
+        viewModel.dialogCloseEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it1 ->
+
+                if (it1) {
+
+                    dialogClose.dismiss()
+                    setResult(Activity.RESULT_CANCELED)
+                    finish()
+                } else {
+
+                    dialogClose.dismiss()
+                }
+            }
+        })
+
+        viewModel.saveEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { id ->
+
+                intent.putExtra(EXTRA_DIARY_ID, id)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
+        })
+
+
+        // Calendar
+        viewModel.calendarEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { it1 ->
+
+                calendarDialog = CalendarDialog(viewModel, it1)
+                calendarDialog.show(supportFragmentManager, "calendarDialog")
+
+                //   calendarDialog.clickedDate(it)
+            }
+        })
+
+        viewModel.calendarDialogCloseEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { _ ->
+
+                calendarDialog.dismiss()
+            }
+        })
+
 
         // Emoji
         viewModel.emojiEvent.observe(this, Observer {
@@ -100,60 +154,25 @@ class DiaryActivity : AppCompatActivity() {
             }
         })
 
-        //
-        viewModel.closeEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let {
 
-                dialogClose = CloseAlertDialog(viewModel)
-                dialogClose.show(supportFragmentManager, "alertDialog")
-            }
-        })
-
-        viewModel.saveEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { id ->
-
-                intent.putExtra(EXTRA_DIARY_ID, id)
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            }
-        })
-
-
-        viewModel.dialogCloseEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it1 ->
-
-                if (it1) {
-
-                    dialogClose.dismiss()
-                    setResult(Activity.RESULT_CANCELED)
-                    finish()
-                } else {
-
-                    dialogClose.dismiss()
-                }
-            }
-        })
-
+        // DATA
         viewModel.title.observe(this, Observer {
 
-            Log.e("krm0219", "EDIT $it \n")
+            Log.e(TAG, "EDIT $it \n")
         })
 
         viewModel.emoji.observe(this, Observer {
 
-            Log.e("krm0219", "EMOJI $it")
+            Log.e(TAG, "EMOJI $it")
             val resourceId = resources.getIdentifier("text_emoji_$it", "string", packageName)
             text_diary_title.setText(resourceId)
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.e(tag, "onResume")
-
-    }
 
     companion object {
+
+        const val TAG = "DiaryActivity"
 
         const val EXTRA_METHOD = "EXTRA_METHOD"
         const val EXTRA_EMOJI = "EXTRA_EMOJI"

@@ -3,6 +3,7 @@ package com.krm0219.mooda.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.krm0219.mooda.data.CalendarData1
 import com.krm0219.mooda.data.room.DiaryData
 import com.krm0219.mooda.util.BaseViewModel
 import com.krm0219.mooda.util.Event
@@ -69,10 +70,24 @@ class DiaryViewModel(application: Application, private val method: String, tteok
     val emojiDialogCloseEvent: MutableLiveData<Event<Int>>
         get() = _emojiDialogCloseEvent
 
+
     // calendar Dialog
-    private val _calendarEvent = MutableLiveData<Event<DiaryData>>()
-    val calendarEvent: MutableLiveData<Event<DiaryData>>
+    private val _calendarEvent = MutableLiveData<Event<List<CalendarData1>>>()
+    val calendarEvent: MutableLiveData<Event<List<CalendarData1>>>
         get() = _calendarEvent
+
+    private val _calendarDataList = MutableLiveData<List<CalendarData1>>()
+    val calendarDataList: MutableLiveData<List<CalendarData1>>
+        get() = _calendarDataList
+
+    private val _calendarData = MutableLiveData<CalendarData1>()
+    val calendarData: MutableLiveData<CalendarData1>
+        get() = _calendarData
+
+    private val _calendarDialogCloseEvent = MutableLiveData<Event<Int>>()
+    val calendarDialogCloseEvent: MutableLiveData<Event<Int>>
+        get() = _calendarDialogCloseEvent
+
 
     // close Dialog
     private val _dialogCloseEvent = MutableLiveData<Event<Boolean>>()
@@ -134,7 +149,35 @@ class DiaryViewModel(application: Application, private val method: String, tteok
 
     fun changeDate() {
 
-        _calendarEvent.value = Event(_diaryData.value!!)
+        val data = ArrayList<CalendarData1>()
+
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.YEAR, -1)
+
+        for (index in 0..365) {
+
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH) + 1
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val diaryData = repository.selectByDate(year, month, day)
+
+            if (diaryData == null) {
+
+                Log.e("krm0219", "DATA1 $year $month $day")
+                data.add(CalendarData1(year, month, day, 0))
+            } else {
+
+                Log.e("krm0219", "DATA2 $year $month $day ${diaryData.emoji}")
+                data.add(CalendarData1(year, month, day, diaryData.emoji))
+            }
+
+            calendar.add(Calendar.DATE, 1)
+        }
+
+        _calendarData.value = data[data.size - 1]
+        _calendarDataList.value = data
+        _calendarEvent.value = Event(_calendarDataList.value!!)
     }
 
     fun changeEmoji() {
@@ -176,6 +219,11 @@ class DiaryViewModel(application: Application, private val method: String, tteok
     fun dialogCloseDiary(goMain: Boolean) {
 
         _dialogCloseEvent.value = Event(goMain)
+    }
+
+    fun dialogCloseCalendar() {
+
+        _calendarDialogCloseEvent.value = Event(1)
     }
 
 
