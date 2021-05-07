@@ -6,12 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.krm0219.mooda.data.room.DiaryData
 import com.krm0219.mooda.util.BaseViewModel
 import com.krm0219.mooda.util.Event
+import com.krm0219.mooda.view.ListActivity
 
 
 // ViewModel에서 Context가 필요한 경우 AndroidViewModel 클래스를 상속받아
 // Application 객체를 넘길 것을 권장 !!
 // Context를 갖고 있으면 메모리 누수의 원인이 된다
-class ListViewModel(application: Application, id: Long) : BaseViewModel(application) {
+class ListViewModel(application: Application, private val id: Long) : BaseViewModel(application) {
 
     private val _diaryDataList = MutableLiveData<List<DiaryData>>()
     val diaryDataList: MutableLiveData<List<DiaryData>>
@@ -45,24 +46,19 @@ class ListViewModel(application: Application, id: Long) : BaseViewModel(applicat
 
 
     var diaryList: List<DiaryData> = listOf()
-    private val diaryId: Long = id
     private var deleteId = 0L
 
-    init {
 
-        _position.value = 0
-    }
-
-
-    fun setDiaryData() {
+    fun setDiaryData(called: String) {
 
         diaryList = repository.selectAll()
         _diaryDataList.value = diaryList
 
-        if (_position.value == 0) {
+        if (called == ListActivity.CALLED_RESUME) {
+
             for (index in diaryList.indices) {
 
-                if (diaryList[index].id == diaryId) {
+                if (diaryList[index].id == id) {
 
                     _position.value = index
                     break
@@ -71,7 +67,6 @@ class ListViewModel(application: Application, id: Long) : BaseViewModel(applicat
         } else {
 
             var pos = _position.value!!.minus(1)
-
             if (pos < diaryList.size) {
 
                 pos = 0

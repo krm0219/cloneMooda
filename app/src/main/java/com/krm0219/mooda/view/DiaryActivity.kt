@@ -25,12 +25,14 @@ class DiaryActivity : AppCompatActivity() {
     val tag = "DiaryActivity"
 
     var emoji = 0
+    var diaryId = 0L
+    var method = ""
     lateinit var binding: ActivityDiaryBinding
     val viewModel: DiaryViewModel by viewModels {
 
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-                DiaryViewModel(application, emoji) as T
+                DiaryViewModel(application, method, emoji, diaryId) as T
         }
     }
 
@@ -45,7 +47,16 @@ class DiaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //  setContentView(R.layout.activity_diary)
 
-        emoji = intent.getIntExtra(EXTRA_EMOJI, 1)
+        method = intent.getStringExtra(EXTRA_METHOD).toString()   // ADD, EDIT
+
+        if (method == METHOD_ADD) {
+
+            emoji = intent.getIntExtra(EXTRA_EMOJI, 1)
+        } else {
+
+            diaryId = intent.getLongExtra(EXTRA_DIARY_ID, 0L)
+        }
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_diary)
         binding.lifecycleOwner = this
@@ -53,21 +64,7 @@ class DiaryActivity : AppCompatActivity() {
 
         text_diary_day.paintFlags = text_diary_day.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(edit_diary_message, 0)
-//        viewModel.monthDataList.observe(this, Observer {
-//
-//            adapter.setMonthList(it)
-//
-//            var position = 0
-//            for(index in it.indices) {
-//
-//                if(Preferences.thisMonth == it[index].month) {
-//                    position = index
-//                }
-//            }
-//
-//            view_pager_main.setCurrentItem(position, false)
-//        })
+
 
         viewModel.calendarEvent.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
@@ -97,7 +94,7 @@ class DiaryActivity : AppCompatActivity() {
         })
 
         viewModel.emojiDialogCloseEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { position ->
+            it.getContentIfNotHandled()?.let { _ ->
 
                 emojiDialog.dismiss()
             }
@@ -158,8 +155,11 @@ class DiaryActivity : AppCompatActivity() {
 
     companion object {
 
+        const val EXTRA_METHOD = "EXTRA_METHOD"
         const val EXTRA_EMOJI = "EXTRA_EMOJI"
         const val EXTRA_DIARY_ID = "EXTRA_DIARY_ID"
-        const val REQUEST_ADD_DIARY = 1000
+
+        const val METHOD_ADD = "METHOD_ADD"
+        const val METHOD_EDIT = "METHOD_EDIT"
     }
 }

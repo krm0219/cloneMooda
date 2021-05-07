@@ -53,9 +53,12 @@ class ListActivity : AppCompatActivity() {
 
 
         viewModel.editEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { id ->
+            it.getContentIfNotHandled()?.let { it1 ->
 
-                Log.e(TAG, "editEvent  id $id")
+                val intent = Intent(this, DiaryActivity::class.java)
+                intent.putExtra(DiaryActivity.EXTRA_METHOD, DiaryActivity.METHOD_EDIT)
+                intent.putExtra(DiaryActivity.EXTRA_DIARY_ID, it1)
+                requestActivity.launch(intent)
             }
         })
 
@@ -83,7 +86,7 @@ class ListActivity : AppCompatActivity() {
                 if (isDelete) {
 
                     dialog.dismiss()
-                    viewModel.setDiaryData()
+                    viewModel.setDiaryData(CALLED_DELETE)
                 } else {
 
                     dialog.dismiss()
@@ -94,7 +97,8 @@ class ListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.setDiaryData()
+        Log.e(TAG, "onResume")
+        viewModel.setDiaryData(CALLED_RESUME)
     }
 
     override fun onBackPressed() {
@@ -135,7 +139,6 @@ class ListActivity : AppCompatActivity() {
             Log.e(TAG, "Position  $it")
             recyclerview_list.scrollToPosition(it)
         })
-
     }
 
 
@@ -145,8 +148,8 @@ class ListActivity : AppCompatActivity() {
 
         if (result.resultCode == Activity.RESULT_OK) {
 
-            Log.e("MainActivity", "requestActivity")
             val addId = result.data?.getLongExtra(DiaryActivity.EXTRA_DIARY_ID, -1)
+            Log.e(TAG, "requestActivity  $addId")
             //  viewModel.getData()
 
 
@@ -194,6 +197,8 @@ class ListActivity : AppCompatActivity() {
 
         const val TAG = "ListActivity"
         const val EXTRA_DIARY_ID = "EXTRA_DIARY_ID"
-        const val REQUEST_ADD_DIARY = 2000
+
+        const val CALLED_DELETE = "DELETE"
+        const val CALLED_RESUME = "RESUME"
     }
 }

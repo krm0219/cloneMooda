@@ -42,11 +42,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.addEvent.observe(this, Observer {
             it.getContentIfNotHandled()?.let { it1 ->
 
-                Log.e("krm0219", "Clicked Emoji $it1")
                 val intent = Intent(this, DiaryActivity::class.java)
+                intent.putExtra(DiaryActivity.EXTRA_METHOD, DiaryActivity.METHOD_ADD)
                 intent.putExtra(DiaryActivity.EXTRA_EMOJI, it1)
                 requestActivity.launch(intent)
-                //  startActivityForResult(intent, DiaryActivity.REQUEST_ADD_DIARY)
             }
         })
 
@@ -108,8 +107,8 @@ class MainActivity : AppCompatActivity() {
 
         if (result.resultCode == Activity.RESULT_OK) {
 
-            Log.e("MainActivity", "requestActivity")
             val addId = result.data?.getLongExtra(DiaryActivity.EXTRA_DIARY_ID, -1)
+            Log.e("MainActivity", "requestActivity  $addId")
             //  viewModel.getData()
 
 

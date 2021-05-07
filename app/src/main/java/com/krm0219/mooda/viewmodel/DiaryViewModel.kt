@@ -6,15 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import com.krm0219.mooda.data.room.DiaryData
 import com.krm0219.mooda.util.BaseViewModel
 import com.krm0219.mooda.util.Event
+import com.krm0219.mooda.view.DiaryActivity
 import java.util.*
 
 
 // ViewModel에서 Context가 필요한 경우 AndroidViewModel 클래스를 상속받아
 // Application 객체를 넘길 것을 권장 !!
 // Context를 갖고 있으면 메모리 누수의 원인이 된다
-class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewModel(application) {
+class DiaryViewModel(application: Application, private val method: String, tteokPosition: Int, private val diaryId: Long) : BaseViewModel(application) {
 
-    val diary = DiaryData()
+    lateinit var diary: DiaryData
 
     private val _diaryData = MutableLiveData<DiaryData>()
     val diaryData: MutableLiveData<DiaryData>
@@ -81,16 +82,22 @@ class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewMod
 
     init {
 
-        setDiaryData()
-        initEmojiCount()
+        if (method == DiaryActivity.METHOD_ADD) {
 
-        _emoji.value = tteokPosition
-        Log.e("krm0219", "tteok ${emoji.value}")
+            setDiaryData()
+            _emoji.value = tteokPosition
+        } else {
+
+            setDiary()
+        }
+
+        initEmojiCount()
     }
 
 
     private fun setDiaryData() {
 
+        diary = DiaryData()
         val calendar = Calendar.getInstance()
         var isFind = false
 
@@ -112,10 +119,18 @@ class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewMod
             }
         }
 
-
         Log.e("DiaryViewModel", "DATE ${diary.year}-${diary.month}-${diary.day}")
         _diaryData.value = diary
     }
+
+    private fun setDiary() {
+
+        diary = repository.selectDiaryById(diaryId)
+        _diaryData.value = diary
+        _emoji.value = diary.emoji
+        _content.value = diary.message
+    }
+
 
     fun changeDate() {
 
@@ -125,13 +140,6 @@ class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewMod
     fun changeEmoji() {
 
         _emojiEvent.value = Event(_emoji.value!!)
-//        if (_emoji.value == 24) {
-//
-//            _emoji.value = 1
-//        } else {
-//
-//            _emoji.value = _emoji.value?.plus(1)
-//        }
     }
 
 
@@ -142,6 +150,8 @@ class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewMod
 
     fun saveDiary() {
 
+        Log.e("ViewModel", "saveDiary")
+
         diary.date = "${diary.year}-${diary.month}-${diary.day}"
         diary.emoji = _emoji.value!!
         diary.title = _title.value!!
@@ -149,14 +159,18 @@ class DiaryViewModel(application: Application, tteokPosition: Int) : BaseViewMod
             diary.message = _content.value!!
         }
 
-
         _diaryData.value = diary
-        repository.insertDiary(_diaryData.value!!)
 
-        Log.e("ViewModel", "saveDiary")
+        if (method == DiaryActivity.METHOD_ADD) {
 
-        val id = repository.selectIdByDate(_diaryData.value!!.year, _diaryData.value!!.month, _diaryData.value!!.day)
-        _saveEvent.value = Event(id)
+            repository.insertDiary(_diaryData.value!!)
+            val id = repository.selectIdByDate(_diaryData.value!!.year, _diaryData.value!!.month, _diaryData.value!!.day)
+            _saveEvent.value = Event(id)
+        } else {
+
+            repository.updateDiary(_diaryData.value!!)
+            _saveEvent.value = Event(diaryId)
+        }
     }
 
     fun dialogCloseDiary(goMain: Boolean) {
