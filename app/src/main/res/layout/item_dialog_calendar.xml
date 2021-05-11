@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="position"
             type="Integer" />
@@ -18,31 +20,26 @@
             type="com.krm0219.mooda.viewmodel.DiaryViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="50dp">
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="4dp"
+        android:visibility="@{data.date==null ? View.INVISIBLE : View.VISIBLE}">
 
         <ImageView
             android:id="@+id/img_calendar_emoji"
             android:layout_width="40dp"
             android:layout_height="34dp"
             app:imageEmoji="@{data.emoji}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/layout_calendar_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:background="@drawable/gamttoek_1" />
 
         <LinearLayout
             android:id="@+id/layout_calendar_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img_calendar_emoji"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginStart="48dp">
+            android:layout_marginStart="48dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,6 +86,5 @@
                 android:textColor="@color/color_333333"
                 android:textSize="18sp" />
         </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </layout>

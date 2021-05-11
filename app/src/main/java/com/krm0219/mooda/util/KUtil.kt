@@ -1,8 +1,10 @@
 package com.krm0219.mooda.util
 
 import android.content.Context
+import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
+import android.view.WindowManager
 import com.krm0219.mooda.data.CalendarData
 import com.krm0219.mooda.data.MoodaData
 import java.text.SimpleDateFormat
@@ -40,9 +42,9 @@ class KUtil {
 
             data.year = calendar.get(Calendar.YEAR)
             data.month = calendar.get(Calendar.MONTH) + 1
-           // data.monthName = getMonthName(calendar.get(Calendar.MONTH))
+            // data.monthName = getMonthName(calendar.get(Calendar.MONTH))
             data.day = calendar.get(Calendar.DATE)
-           // data.dayOfWeek = getDayOfWeekName(calendar.get(Calendar.DATE))
+            // data.dayOfWeek = getDayOfWeekName(calendar.get(Calendar.DATE))
 
             //    Log.e("krm0219", "data  > ${data.monthName} / ${data.dayOfWeek}  / ${calendar.time}")
 
@@ -81,6 +83,16 @@ class KUtil {
             val formatter = SimpleDateFormat("EE", Locale.KOREA)
 
             return formatter.format(date).toUpperCase(Locale.getDefault())
+        }
+
+
+        fun getScreenWidth(context: Context): Int {
+            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val dm = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(dm)
+
+            Log.e("krm0219", "getScreenWidth   ${dm.widthPixels} / ${dm.heightPixels}")
+            return dm.widthPixels
         }
 
 

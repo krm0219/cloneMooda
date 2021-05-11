@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:alpha="0.6"
+    android:src="@drawable/bg_check_white1"
+    android:tileMode="repeat" />
+
+

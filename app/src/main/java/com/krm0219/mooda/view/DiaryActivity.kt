@@ -123,6 +123,10 @@ class DiaryActivity : AppCompatActivity() {
         viewModel.calendarDialogCloseEvent.observe(this, Observer {
             it.getContentIfNotHandled()?.let { _ ->
 
+
+
+
+
                 calendarDialog.dismiss()
             }
         })

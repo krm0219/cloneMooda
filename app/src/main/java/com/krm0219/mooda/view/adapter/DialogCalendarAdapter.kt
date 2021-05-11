@@ -1,6 +1,5 @@
 package com.krm0219.mooda.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,9 +9,7 @@ import com.krm0219.mooda.data.CalendarData1
 import com.krm0219.mooda.databinding.ItemDialogCalendarBinding
 import com.krm0219.mooda.viewmodel.DiaryViewModel
 
-class DialogCalendarAdapter(private var viewModel: DiaryViewModel) : RecyclerView.Adapter<DialogCalendarAdapter.ViewHolder>() {
-
-    var dates: List<CalendarData1> = listOf()
+class DialogCalendarAdapter(private var viewModel: DiaryViewModel, private var calendar: List<CalendarData1>?) : RecyclerView.Adapter<DialogCalendarAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -27,7 +24,10 @@ class DialogCalendarAdapter(private var viewModel: DiaryViewModel) : RecyclerVie
 
     override fun getItemCount(): Int {
 
-        return dates.size
+        return if (calendar == null)
+            0
+        else
+            calendar!!.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -39,19 +39,12 @@ class DialogCalendarAdapter(private var viewModel: DiaryViewModel) : RecyclerVie
 
         fun bind(viewModel: DiaryViewModel, position: Int) {
 
-            val data = dates[position]
+            val data = calendar?.get(position)
 
             binding.position = position
             binding.data = data
             binding.viewModel = viewModel
             binding.executePendingBindings()
         }
-    }
-
-    fun setDateList(dates: List<CalendarData1>) {
-
-        Log.e("krm0219", "setDateList")
-        this.dates = dates
-        notifyDataSetChanged()
     }
 }

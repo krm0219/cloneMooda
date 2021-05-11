@@ -16,6 +16,11 @@
         android:background="@color/color_e9e9df"
         tools:context=".view.ListActivity">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_check_repeat" />
+
         <RelativeLayout
             android:id="@+id/layout_top_title"
             android:layout_width="match_parent"

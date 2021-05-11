@@ -22,6 +22,9 @@ interface DiaryDAO : BaseDao<DiaryData> {
     @Query("SELECT * FROM DIARY WHERE year=:year AND month=:month")
     fun selectListByDate(year: Int, month: Int): List<DiaryData>
 
+    @Query("SELECT * FROM DIARY WHERE :date < date ORDER BY date ASC")
+    fun selectListOverDate(date: String): List<DiaryData>
+
 
     @Query("SELECT id FROM DIARY WHERE year=:year AND month=:month AND day=:day")
     fun selectIdByDate(year: Int, month: Int, day: Int): Long

@@ -110,4 +110,10 @@ class Repository(application: Application) {
     }
 
 
+    fun selectListOverDate(date: String): List<DiaryData> {
+
+        return diaryDao.selectListOverDate(date)
+    }
+
+
 }

@@ -21,7 +21,6 @@
         android:paddingHorizontal="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_dialog_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -47,15 +46,34 @@
                 android:id="@+id/recyclerview_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
-                android:layout_centerInParent="true"
                 android:layout_marginTop="16dp"
-                android:clipToPadding="false"
                 android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toTopOf="@id/btn_calendar_close"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_calendar_year"
                 tools:listitem="@layout/item_dialog_calendar" />
+
+            <com.aigestudio.wheelpicker.WheelPicker
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp"
+                android:background="#E5DEEB"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/btn_calendar_close"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_calendar_year"
+                app:wheel_atmospheric="true"
+                app:wheel_curved="true"
+                app:wheel_cyclic="true"
+                app:wheel_item_align="right"
+                app:wheel_item_text_color="#A7A7DB"
+                app:wheel_item_text_size="24sp"
+                app:wheel_selected_item_text_color="#536D8A" />
+
 
             <Button
                 android:id="@+id/btn_calendar_close"

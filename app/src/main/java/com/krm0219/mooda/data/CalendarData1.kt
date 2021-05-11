@@ -4,6 +4,7 @@ import com.krm0219.mooda.util.KUtil
 
 
 data class CalendarData1(
+    var date: String?,
     var year: Int,
     var month: Int,
     var day: Int,
