@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 data class MonthData(
-    var year: Int,
-    var month: Int,
+    var year: Int,  // yyyy
+    var month: Int, // MM
     var items: ArrayList<DiaryData>?
 ) {
 

@@ -23,8 +23,4 @@ object Preferences {
     var thisMonth: Int
         get() = preferences.getInt(THIS_MONTH, 0)
         set(value) = preferences.edit().putInt(THIS_MONTH, value).apply()
-
-    var today: Int
-        get() = preferences.getInt(TODAY, 0)
-        set(value) = preferences.edit().putInt(TODAY, value).apply()
 }

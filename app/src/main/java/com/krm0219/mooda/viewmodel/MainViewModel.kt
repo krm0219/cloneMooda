@@ -1,7 +1,7 @@
 package com.krm0219.mooda.viewmodel
 
+import android.annotation.SuppressLint
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.krm0219.mooda.data.MonthData
 import com.krm0219.mooda.data.room.DiaryData
@@ -19,6 +19,11 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     val monthDataList: MutableLiveData<List<MonthData>>
         get() = _monthDataList
 
+    var month: Int = Preferences.thisMonth
+    private val _monthPosition = MutableLiveData<Int>()
+    val monthPosition: MutableLiveData<Int>
+        get() = _monthPosition
+
     private val _addEvent = MutableLiveData<Event<Int>>()
     val addEvent: MutableLiveData<Event<Int>>
         get() = _addEvent
@@ -27,30 +32,25 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     val itemClickEvent: MutableLiveData<Event<Long>>
         get() = _itemClickEvent
 
-
     private val _developerEvent = MutableLiveData<Event<Boolean>>()
     val developerEvent: MutableLiveData<Event<Boolean>>
         get() = _developerEvent
 
 
-    init {
+    fun setMonthData() {
 
-     //   setMonthData()
-    }
+        clickDeveloper = 0
 
-
-     fun setMonthData() {
-
+        var hasThisMonth = false
         val data = ArrayList<MonthData>()
         val list = repository.selectAll()
 
         for (diary in list) {
 
-            val year = diary.year
-            val month = diary.month
+            val year = diary.getFormatYear()
+            val month = diary.getFormatMonth()
             var position = -1
 
-            Log.e("krm0219", "YEAR-Month $year $month ${diary.day}")
             for (j in data.indices) {
 
                 if (data[j].year == year && data[j].month == month) {
@@ -69,51 +69,63 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                 items.add(diary)
                 data.add(MonthData(year, month, items))
             }
+
+            if (month == Preferences.thisMonth)
+                hasThisMonth = true
         }
 
-        if (list.isEmpty()) {
+
+        if (!hasThisMonth) {
 
             data.add(MonthData(Preferences.thisYear, Preferences.thisMonth, null))
         }
 
         _monthDataList.value = data
+
+
+        // month Position
+        for (index in data.indices) {
+
+            if (data[index].month == month) {
+
+                _monthPosition.value = index
+                break
+            }
+        }
     }
 
-    fun onClickEvent() {
-        // TODO_ Emoji 선택
+
+    fun onClickAddEvent() {
+
+        // TODO_ Emoji 선택 position
         _addEvent.value = Event(1)
     }
 
 
-    fun getAllData() {
+    @SuppressLint("SimpleDateFormat")
+    fun setMonthPosition(id: Long) {
 
-        val list = repository.selectAll()
-
-        for (i in list.indices) {
-
-
-            Log.e("krm0219", "DATA $i  ${list[i].year}-${list[i].month}-${list[i].day} // ${list[i].emoji}")
-        }
-    }
-
-    fun getData() {
-
-        setMonthData()
-        //  _diaryData.value = repository.selectDiaryById(_id)
+        val diary = repository.selectDiaryById(id)
+        month = diary.getFormatMonth()
     }
 
 
-    fun developerMode() {
+    //
+    fun onClickEmojiItem(id: Long) {
 
-        _developerEvent.value = Event(true)
-    }
-
-
-    fun clickEmojiItem(id: Long) {
-
-        Log.e("krm0219", "clickEmojiItem  $id")
         _itemClickEvent.value = Event(id)
     }
 
+    var clickDeveloper = 0
+    fun onClickDeveloperMode() {
 
+        if (clickDeveloper == 9) {
+
+            clickDeveloper = 0
+            _developerEvent.value = Event(true)
+        } else {
+            clickDeveloper++
+        }
+
+    }
 }

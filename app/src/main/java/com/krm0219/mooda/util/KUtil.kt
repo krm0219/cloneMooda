@@ -5,63 +5,11 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import android.view.WindowManager
-import com.krm0219.mooda.data.CalendarData
-import com.krm0219.mooda.data.MoodaData
 import java.text.SimpleDateFormat
 import java.util.*
 
 class KUtil {
     companion object {
-
-        var calendarList: ArrayList<CalendarData> = ArrayList()
-        var mainList: ArrayList<MoodaData> = ArrayList()
-
-
-        val REQUEST_ADD_DIARY = 1200
-        val REQUEST_EDIT_DIARY = 1300
-        val REQUEST_LIST_DIARY = 1400
-
-
-        fun getMainListData(calendar: Calendar): MoodaData {
-
-            val data = MoodaData()
-
-            data.year = calendar.get(Calendar.YEAR)
-            data.month = calendar.get(Calendar.MONTH) + 1
-            data.monthName = getMonthName(calendar.get(Calendar.MONTH))
-
-            Log.e("krm0219", "getMainListData  > ${data.monthName} / ${calendar.time}")
-
-            return data
-        }
-
-
-        fun getCalendarData(calendar: Calendar): CalendarData {
-
-            val data = CalendarData()
-
-            data.year = calendar.get(Calendar.YEAR)
-            data.month = calendar.get(Calendar.MONTH) + 1
-            // data.monthName = getMonthName(calendar.get(Calendar.MONTH))
-            data.day = calendar.get(Calendar.DATE)
-            // data.dayOfWeek = getDayOfWeekName(calendar.get(Calendar.DATE))
-
-            //    Log.e("krm0219", "data  > ${data.monthName} / ${data.dayOfWeek}  / ${calendar.time}")
-
-            return data
-        }
-
-
-        fun getMonthName(month: Int): String {
-
-            val calendar = Calendar.getInstance()
-            calendar.set(Calendar.MONTH, month)
-            val date = calendar.time
-
-            val formatter = SimpleDateFormat("MMMM", Locale.ENGLISH)
-
-            return formatter.format(date).toUpperCase(Locale.getDefault())
-        }
 
         fun getDayOfWeekName(day: Int): String {
 

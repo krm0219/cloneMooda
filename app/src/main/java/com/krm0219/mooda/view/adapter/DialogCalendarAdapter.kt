@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.krm0219.mooda.R
-import com.krm0219.mooda.data.CalendarData1
+import com.krm0219.mooda.data.CalendarData
 import com.krm0219.mooda.databinding.ItemDialogCalendarBinding
 import com.krm0219.mooda.viewmodel.DiaryViewModel
 
-class DialogCalendarAdapter(private var viewModel: DiaryViewModel, private var calendar: List<CalendarData1>?) : RecyclerView.Adapter<DialogCalendarAdapter.ViewHolder>() {
+class DialogCalendarAdapter(private var viewModel: DiaryViewModel, private var calendar: List<CalendarData>?) : RecyclerView.Adapter<DialogCalendarAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 

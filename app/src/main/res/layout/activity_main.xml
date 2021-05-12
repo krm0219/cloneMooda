@@ -47,16 +47,15 @@
                 android:layout_margin="16dp"
                 android:backgroundTint="@color/black"
                 android:contentDescription="@string/fab_content_desc"
-                android:onClick="@{() -> viewModel.onClickEvent()}" />
+                android:onClick="@{() -> viewModel.onClickAddEvent()}" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:onClick="@{()->viewModel.developerMode()}" />
+                android:onClick="@{()->viewModel.onClickDeveloperMode()}"
+                android:visibility="invisible" />
         </RelativeLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

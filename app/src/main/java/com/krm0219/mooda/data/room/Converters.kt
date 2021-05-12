@@ -14,11 +14,9 @@ class Converters {
     fun jsonToList(value: String) = Gson().fromJson(value, Array<DiaryData>::class.java).toList()
 
 
-
+    @TypeConverter
+    fun toDate(value: Long?): Date? = value?.let { Date(it) }
 
     @TypeConverter
-    fun fromTimeStamp(value: Long?): Date? = value?.let { Date(it) }
-
-    @TypeConverter
-    fun dateToTimeStamp(date: Date?): Long? = date?.time
+    fun toTimeStamp(date: Date?): Long? = date?.time
 }

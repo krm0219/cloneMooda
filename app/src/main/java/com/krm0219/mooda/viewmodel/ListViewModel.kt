@@ -27,6 +27,10 @@ class ListViewModel(application: Application, private val id: Long) : BaseViewMo
         get() = _title
 
 
+    private val _backEvent = MutableLiveData<Event<Boolean>>()
+    val backEvent: MutableLiveData<Event<Boolean>>
+        get() = _backEvent
+
     private val _editEvent = MutableLiveData<Event<Long>>()
     val editEvent: MutableLiveData<Event<Long>>
         get() = _editEvent
@@ -35,27 +39,23 @@ class ListViewModel(application: Application, private val id: Long) : BaseViewMo
     val deleteEvent: MutableLiveData<Event<Long>>
         get() = _deleteEvent
 
-    private val _backEvent = MutableLiveData<Event<Boolean>>()
-    val backEvent: MutableLiveData<Event<Boolean>>
-        get() = _backEvent
-
 
     private val _dialogCloseEvent = MutableLiveData<Event<Boolean>>()
     val dialogCloseEvent: MutableLiveData<Event<Boolean>>
         get() = _dialogCloseEvent
 
 
-    var diaryList: List<DiaryData> = listOf()
     private var deleteId = 0L
 
 
     fun setDiaryData(called: String) {
 
-        diaryList = repository.selectAll()
+        val diaryList = repository.selectAll()
         _diaryDataList.value = diaryList
 
         if (called == ListActivity.CALLED_RESUME) {
 
+            // 클릭한 ITEM ID 찾아서 세팅
             for (index in diaryList.indices) {
 
                 if (diaryList[index].id == id) {
@@ -66,6 +66,7 @@ class ListViewModel(application: Application, private val id: Long) : BaseViewMo
             }
         } else {
 
+            // 삭제한 ITEM 위치 계산해서 세팅
             var pos = _position.value!!.minus(1)
             if (pos < diaryList.size) {
 
@@ -80,11 +81,18 @@ class ListViewModel(application: Application, private val id: Long) : BaseViewMo
 
     fun setTitle(position: Int) {
 
-        val diary = repository.selectDiaryById(diaryList[position].id)
-        _title.value = "${diary.getMonthString()} ${diary.year}"
+        val diary = repository.selectDiaryById(_diaryDataList.value!![position].id)
+        _title.value = "${diary.getMonthString()} ${diary.getFormatYear()}"
     }
 
 
+    // Top Button
+    fun clickBack() {
+
+        _backEvent.value = Event(true)
+    }
+
+    //
     fun clickEdit(position: Int) {
 
         _editEvent.value = Event(_diaryDataList.value!![position].id)
@@ -92,15 +100,10 @@ class ListViewModel(application: Application, private val id: Long) : BaseViewMo
 
     fun clickDelete(position: Int) {
 
-        Log.e("krm0219", "clickDelete $position")
         deleteId = _diaryDataList.value!![position].id
         _deleteEvent.value = Event(deleteId)
     }
 
-    fun clickBack() {
-
-        _backEvent.value = Event(true)
-    }
 
     // Delete Dialog
     fun clickDialogClose(isDelete: Boolean) {
@@ -110,8 +113,7 @@ class ListViewModel(application: Application, private val id: Long) : BaseViewMo
             Log.e("krm0219", "Delete  $deleteId")
             repository.deleteDiaryById(deleteId)
         }
-
-
+        
         _dialogCloseEvent.value = Event(isDelete)
     }
 }

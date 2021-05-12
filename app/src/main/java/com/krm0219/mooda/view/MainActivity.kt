@@ -13,14 +13,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.krm0219.mooda.R
 import com.krm0219.mooda.databinding.ActivityMainBinding
-import com.krm0219.mooda.util.Preferences
 import com.krm0219.mooda.view.adapter.MainAdapter
 import com.krm0219.mooda.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    val tag = "MainActivity"
 
     lateinit var binding: ActivityMainBinding
     val viewModel: MainViewModel by viewModels()
@@ -35,19 +33,32 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
         setRecyclerView()
-
+        viewModel.setMonthData()
 
         viewModel.addEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it1 ->
+            it.getContentIfNotHandled()?.let { position ->
 
                 val intent = Intent(this, DiaryActivity::class.java)
                 intent.putExtra(DiaryActivity.EXTRA_METHOD, DiaryActivity.METHOD_ADD)
-                intent.putExtra(DiaryActivity.EXTRA_EMOJI, it1)
-                requestActivity.launch(intent)
+                intent.putExtra(DiaryActivity.EXTRA_EMOJI, position)
+                addDiaryActivity.launch(intent)
             }
         })
+
+
+        viewModel.itemClickEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { id ->
+
+                viewModel.setMonthPosition(id)
+
+                val intent = Intent(this, ListActivity::class.java)
+                intent.putExtra(ListActivity.EXTRA_DIARY_ID, id)
+                startActivity(intent)
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left)
+            }
+        })
+
 
         viewModel.developerEvent.observe(this, Observer {
 
@@ -57,24 +68,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
-
-
-        viewModel.itemClickEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it1 ->
-
-                val intent = Intent(this, ListActivity::class.java)
-                intent.putExtra(ListActivity.EXTRA_DIARY_ID, it1)
-                startActivity(intent)
-                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left)
-            }
-        })
     }
 
     override fun onResume() {
         super.onResume()
 
         Log.e("MainActivity", "onResume")
-        viewModel.setMonthData()
     }
 
 
@@ -87,70 +86,34 @@ class MainActivity : AppCompatActivity() {
         viewModel.monthDataList.observe(this, Observer {
 
             adapter.setMonthList(it)
+        })
 
-            var position = 0
-            for (index in it.indices) {
+        viewModel.monthPosition.observe(this, Observer {
 
-                if (Preferences.thisMonth == it[index].month) {
-                    position = index
-                }
-            }
-
-            view_pager_main.setCurrentItem(position, false)
+            Log.e(TAG, " Month Position $it")
+            view_pager_main.setCurrentItem(it, false)
         })
     }
 
-
-    private val requestActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
+    private val addDiaryActivity: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
 
         if (result.resultCode == Activity.RESULT_OK) {
 
             val addId = result.data?.getLongExtra(DiaryActivity.EXTRA_DIARY_ID, -1)
-            Log.e("MainActivity", "requestActivity  $addId")
-            //  viewModel.getData()
+            addId?.let {
 
-
-//            adapter.setMonthList(it)
-//
-//            var position = 0
-//            for (index in it.indices) {
-//
-//                if (Preferences.thisMonth == it[index].month) {
-//                    position = index
-//                }
-//            }
-//
-//            view_pager_main.setCurrentItem(position, false)
-
-
-            //   val addId = result.data?.getIntExtra("add_diary_id", -1)
-
-            Log.e("krm0219", "onActivityResult   RESULT_OK")
-
-
-            //    adapter.addDiaryData(2021, 4, dia)
-
-//            CoroutineScope(Dispatchers.IO).launch {
-//
-//                val addDiary = AppDatabase.getInstance(this@MainActivity1)!!.diaryDao().selectById(addId)
-//                setEmojiData(addDiary)
-//
-//                launch(Dispatchers.Main) {
-//
-//                    // year, month 정렬
-//                    Collections.sort(KUtil.mainList, CompareDateAsc())
-//
-//                    adapter.notifyDataSetChanged()
-//                    view_pager_main.setCurrentItem(KUtil.mainList.size, false)
-//                }
-//            }
-        } else if (result.resultCode == Activity.RESULT_CANCELED) {
-
-            Log.e("krm0219", "onActivityResult   RESULT_CANCELED")
+                Log.e(TAG, "requestActivity  $addId")
+                viewModel.setMonthPosition(it)
+                viewModel.setMonthData()
+            }
         }
     }
 
+    
+    companion object {
 
+        const val TAG = "MainActivity"
+    }
 }

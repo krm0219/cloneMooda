@@ -52,30 +52,31 @@ class ListActivity : AppCompatActivity() {
         setRecyclerView()
 
 
-        viewModel.editEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it1 ->
-
-                val intent = Intent(this, DiaryActivity::class.java)
-                intent.putExtra(DiaryActivity.EXTRA_METHOD, DiaryActivity.METHOD_EDIT)
-                intent.putExtra(DiaryActivity.EXTRA_DIARY_ID, it1)
-                requestActivity.launch(intent)
-            }
-        })
-
-        viewModel.deleteEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { id ->
-
-                Log.e(TAG, "deleteEvent  id $id")
-                dialog = DeleteAlertDialog(viewModel)
-                dialog.show(supportFragmentManager, "deleteDialog")
-            }
-        })
 
         viewModel.backEvent.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
 
                 finish()
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right)
+            }
+        })
+
+
+        viewModel.editEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { id ->
+
+                val intent = Intent(this, DiaryActivity::class.java)
+                intent.putExtra(DiaryActivity.EXTRA_METHOD, DiaryActivity.METHOD_EDIT)
+                intent.putExtra(DiaryActivity.EXTRA_DIARY_ID, id)
+                requestActivity.launch(intent)
+            }
+        })
+
+        viewModel.deleteEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { _ ->
+
+                dialog = DeleteAlertDialog(viewModel)
+                dialog.show(supportFragmentManager, "deleteDialog")
             }
         })
 
@@ -108,6 +109,7 @@ class ListActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right)
     }
 
+
     private fun setRecyclerView() {
 
         adapter = ListAdapter(viewModel)
@@ -132,7 +134,6 @@ class ListActivity : AppCompatActivity() {
             adapter.setDiaryList(it)
         })
 
-
         viewModel.position.observe(this, Observer {
 
             Log.e(TAG, "Position  $it")
@@ -149,43 +150,8 @@ class ListActivity : AppCompatActivity() {
 
             val addId = result.data?.getLongExtra(DiaryActivity.EXTRA_DIARY_ID, -1)
             Log.e(TAG, "requestActivity  $addId")
-            //  viewModel.getData()
-
-
-//            adapter.setMonthList(it)
-//
-//            var position = 0
-//            for (index in it.indices) {
-//
-//                if (Preferences.thisMonth == it[index].month) {
-//                    position = index
-//                }
-//            }
-//
-//            view_pager_main.setCurrentItem(position, false)
-
-
-            //   val addId = result.data?.getIntExtra("add_diary_id", -1)
-
             Log.e("krm0219", "onActivityResult   RESULT_OK")
 
-
-            //    adapter.addDiaryData(2021, 4, dia)
-
-//            CoroutineScope(Dispatchers.IO).launch {
-//
-//                val addDiary = AppDatabase.getInstance(this@MainActivity1)!!.diaryDao().selectById(addId)
-//                setEmojiData(addDiary)
-//
-//                launch(Dispatchers.Main) {
-//
-//                    // year, month 정렬
-//                    Collections.sort(KUtil.mainList, CompareDateAsc())
-//
-//                    adapter.notifyDataSetChanged()
-//                    view_pager_main.setCurrentItem(KUtil.mainList.size, false)
-//                }
-//            }
         } else if (result.resultCode == Activity.RESULT_CANCELED) {
 
             Log.e("krm0219", "onActivityResult   RESULT_CANCELED")

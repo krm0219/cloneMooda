@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.krm0219.mooda.data.room.DiaryData
+import androidx.room.TypeConverters
+import com.krm0219.mooda.data.room.Converters
 import com.krm0219.mooda.data.room.DiaryDAO
+import com.krm0219.mooda.data.room.DiaryData
 
-@Database(entities = [DiaryData::class], version = 1)
+@Database(entities = [DiaryData::class], version = 8)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun diaryDao(): DiaryDAO

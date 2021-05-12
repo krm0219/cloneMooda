@@ -3,37 +3,46 @@ package com.krm0219.mooda.data.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.krm0219.mooda.util.KUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Entity(tableName = "DIARY")
 data class DiaryData(
     @PrimaryKey(autoGenerate = true) var id: Long,
-    @ColumnInfo(name = "date") var date: String,
-    @ColumnInfo(name = "year") var year: Int,
-    @ColumnInfo(name = "month") var month: Int,
-    @ColumnInfo(name = "day") var day: Int,
-    @ColumnInfo(name = "dayOfWeek") var dayOfWeek: String,
+    @ColumnInfo(name = "date1") var date1: Date,
     @ColumnInfo(name = "emoji") var emoji: Int,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "message") var message: String
 ) {
-    constructor() : this(0, "", 0, 0, 0, "", 0, "", "")
+    constructor() : this(0, Date(), 0, "", "")
+
+    fun getFormatYear(): Int {
+
+        val formatter = SimpleDateFormat("yyyy", Locale.ENGLISH)
+        return formatter.format(date1).toInt()
+    }
+
+    fun getFormatMonth(): Int {
+
+        val formatter = SimpleDateFormat("MM", Locale.ENGLISH)
+        return formatter.format(date1).toInt()
+    }
+
+    fun getFormatDay(): Int {
+
+        val formatter = SimpleDateFormat("dd", Locale.ENGLISH)
+        return formatter.format(date1).toInt()
+    }
 
     fun getMonthString(): String {
 
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.MONTH, month - 1)
-        val date = calendar.time
-
         val formatter = SimpleDateFormat("MMMM", Locale.ENGLISH)
-
-        return formatter.format(date).toUpperCase(Locale.getDefault())
+        return formatter.format(date1).toUpperCase(Locale.getDefault())
     }
 
     fun getDayString(): String {
 
-        return KUtil.getDayOfWeekName(day)
+        val formatter = SimpleDateFormat("EE", Locale.ENGLISH)
+        return formatter.format(date1).toUpperCase(Locale.getDefault())
     }
 }

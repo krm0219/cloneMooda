@@ -47,7 +47,7 @@
                     android:id="@+id/text_item_diary_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(diary.day)}"
+                    android:text="@{String.valueOf(diary.formatDay)}"
                     android:textColor="@color/black"
                     android:textSize="26sp"
                     tools:text="15" />

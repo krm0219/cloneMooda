@@ -13,7 +13,7 @@
 
         <variable
             name="data"
-            type="com.krm0219.mooda.data.CalendarData1" />
+            type="com.krm0219.mooda.data.CalendarData" />
 
         <variable
             name="viewModel"
@@ -24,8 +24,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingVertical="4dp"
-        android:visibility="@{data.date==null ? View.INVISIBLE : View.VISIBLE}">
+        android:paddingVertical="4dp">
 
         <ImageView
             android:id="@+id/img_calendar_emoji"
@@ -44,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(data.month)}"
+                android:text="@{String.valueOf(data.formatMonth)}"
                 android:textColor="@color/color_333333"
                 android:textSize="18sp"
                 tools:text="2" />
@@ -59,7 +58,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(data.day)}"
+                android:text="@{String.valueOf(data.formatDay)}"
                 android:textColor="@color/color_333333"
                 android:textSize="18sp"
                 tools:text="2" />

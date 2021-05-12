@@ -1,13 +1,36 @@
 package com.krm0219.mooda.data
 
-import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class CalendarData : Serializable {
+data class CalendarData(
+    var date1: Date,
+    var emoji: Int,
+) {
 
-    var year: Int = 0
-    var month: Int = 0
-    var day: Int = 0
-    var emoji: Int = 0
+    fun getFormatYear(): Int {
+
+        val formatter = SimpleDateFormat("yyyy", Locale.ENGLISH)
+        return formatter.format(date1).toInt()
+    }
+
+    fun getFormatMonth(): Int {
+
+        val formatter = SimpleDateFormat("MM", Locale.ENGLISH)
+        return formatter.format(date1).toInt()
+    }
+
+    fun getFormatDay(): Int {
+
+        val formatter = SimpleDateFormat("dd", Locale.ENGLISH)
+        return formatter.format(date1).toInt()
+    }
+
+    fun getDayString(): String {
+
+        val formatter = SimpleDateFormat("EE", Locale.KOREA)
+        return formatter.format(date1).toUpperCase(Locale.getDefault())
+    }
 }
 

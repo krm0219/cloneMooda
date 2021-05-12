@@ -23,7 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="67dp"
         android:layout_height="66dp"
-        android:onClick="@{()->viewModel.clickEmojiItem(diary.id)}">
+        android:onClick="@{()->viewModel.onClickEmojiItem(diary.id)}">
 
         <ImageView
             android:layout_width="67dp"

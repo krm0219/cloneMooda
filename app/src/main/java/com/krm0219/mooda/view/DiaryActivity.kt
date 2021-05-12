@@ -41,7 +41,6 @@ class DiaryActivity : AppCompatActivity() {
 
     private lateinit var imm: InputMethodManager
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //  setContentView(R.layout.activity_diary)
@@ -75,27 +74,12 @@ class DiaryActivity : AppCompatActivity() {
 
     private fun setObserve() {
 
-        // Top Title
+        // Top Title Button
         viewModel.closeEvent.observe(this, Observer {
             it.getContentIfNotHandled()?.let {
 
                 dialogClose = CloseAlertDialog(viewModel)
-                dialogClose.show(supportFragmentManager, "alertDialog")
-            }
-        })
-
-        viewModel.dialogCloseEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it1 ->
-
-                if (it1) {
-
-                    dialogClose.dismiss()
-                    setResult(Activity.RESULT_CANCELED)
-                    finish()
-                } else {
-
-                    dialogClose.dismiss()
-                }
+                dialogClose.show(supportFragmentManager, "closeAlertDialog")
             }
         })
 
@@ -108,26 +92,48 @@ class DiaryActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.dialogCloseEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { closed ->
 
-        // Calendar
-        viewModel.calendarEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { it1 ->
+                dialogClose.dismiss()
 
-                calendarDialog = CalendarDialog(viewModel, it1)
-                calendarDialog.show(supportFragmentManager, "calendarDialog")
+                if (closed) {
 
-                //   calendarDialog.clickedDate(it)
+                    setResult(Activity.RESULT_CANCELED)
+                    finish()
+                }
             }
         })
 
+
+        // Calendar
+        viewModel.calendarEvent.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { dates ->
+
+                calendarDialog = CalendarDialog(viewModel, dates)
+                calendarDialog.show(supportFragmentManager, "calendarDialog")
+
+            }
+        })
+
+//        viewModel.calendarPosition.observe(this, Observer {
+//
+//            calendarDialog.setPosition(it)
+//        })
+
+
         viewModel.calendarDialogCloseEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { _ ->
+            it.getContentIfNotHandled()?.let { position ->
 
+                when (position) {
+                    -10 -> calendarDialog.shakeAnimation()
+                    -1 -> calendarDialog.dismiss()
+                    else -> {
 
-
-
-
-                calendarDialog.dismiss()
+                        viewModel.setDiaryData(position)
+                        calendarDialog.dismiss()
+                    }
+                }
             }
         })
 
@@ -138,7 +144,6 @@ class DiaryActivity : AppCompatActivity() {
 
                 emojiDialog = EmojiDialog(viewModel)
                 emojiDialog.show(supportFragmentManager, "emojiDialog")
-
                 viewModel.initEmojiCount()
             }
         })
@@ -152,7 +157,7 @@ class DiaryActivity : AppCompatActivity() {
         })
 
         viewModel.emojiDialogCloseEvent.observe(this, Observer {
-            it.getContentIfNotHandled()?.let { _ ->
+            it.getContentIfNotHandled()?.let {
 
                 emojiDialog.dismiss()
             }
@@ -162,12 +167,12 @@ class DiaryActivity : AppCompatActivity() {
         // DATA
         viewModel.title.observe(this, Observer {
 
-            Log.e(TAG, "EDIT $it \n")
+            Log.i(TAG, "EDIT $it \n")
         })
 
         viewModel.emoji.observe(this, Observer {
 
-            Log.e(TAG, "EMOJI $it")
+            Log.i(TAG, "EMOJI $it")
             val resourceId = resources.getIdentifier("text_emoji_$it", "string", packageName)
             text_diary_title.setText(resourceId)
         })
