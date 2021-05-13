@@ -31,6 +31,6 @@
             app:imageEmoji="@{diary.emoji}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/gamttoek_1" />
+            tools:background="@drawable/gamtteok_1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

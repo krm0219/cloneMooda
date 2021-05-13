@@ -32,4 +32,6 @@
     <string name="text_delete_diary">일기 삭제</string>
     <string name="msg_delete_diary">정말로 이 일기를 삭제할까요?</string>
 
+    <string name="text_month_day_dayofweek">%d월 %d일 (%s)</string>
+
 </resources>

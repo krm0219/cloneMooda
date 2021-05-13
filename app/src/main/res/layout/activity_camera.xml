@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                tools:src="@drawable/emoji1" />
+                tools:src="@drawable/gamtteok_5" />
 
             <Button
                 android:id="@+id/camera_capture_button"

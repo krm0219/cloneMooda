@@ -41,13 +41,17 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="16dp"
+                android:layout_marginBottom="28dp"
                 android:backgroundTint="@color/black"
                 android:contentDescription="@string/fab_content_desc"
-                android:onClick="@{() -> viewModel.onClickAddEvent()}" />
+                android:onClick="@{() -> viewModel.onClickAddEvent()}"
+                android:rotation="135"
+                android:src="@drawable/icon_close_white" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -55,7 +59,32 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:onClick="@{()->viewModel.onClickDeveloperMode()}"
-                android:visibility="invisible" />
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="67dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="50dp"
+                android:background="@drawable/gamtteok_1" />
+
+            <ImageView
+                android:layout_width="67dp"
+                android:layout_height="58dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/gamtteok_12" />
+
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

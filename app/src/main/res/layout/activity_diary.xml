@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="SpUsage">
 
     <data>
 
@@ -57,7 +58,7 @@
                             android:layout_height="wrap_content"
                             android:text="@{String.valueOf(viewModel.diaryData.formatDay)}"
                             android:textColor="@color/black"
-                            android:textSize="26sp"
+                            android:textSize="26dp"
                             tools:text="15" />
 
                         <TextView
@@ -67,7 +68,7 @@
                             android:layout_marginStart="4dp"
                             android:text="@{viewModel.diaryData.getDayString}"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
+                            android:textSize="12dp"
                             tools:text="Mon" />
                     </LinearLayout>
 
@@ -92,20 +93,23 @@
                             android:layout_width="140dp"
                             android:layout_height="120dp"
                             app:imageEmoji="@{viewModel.emoji}"
-                            tools:background="@drawable/gamttoek_1" />
+                            tools:background="@drawable/gamtteok_1" />
                         <!--                        android:onClick="@{()->viewModel.changeEmoji()}"-->
 
-                        <RelativeLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp">
 
                             <ImageView
                                 android:id="@+id/img_diary_highlighter"
-                                android:layout_width="50dp"
+                                android:layout_width="0dp"
                                 android:layout_height="30dp"
                                 android:layout_alignParentBottom="true"
-                                android:background="@drawable/img_bottom_line" />
+                                android:background="@drawable/img_bottom_line"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@id/text_diary_title"
+                                app:layout_constraintStart_toStartOf="@id/text_diary_title" />
 
                             <EditText
                                 android:id="@+id/text_diary_title"
@@ -114,11 +118,17 @@
                                 android:layout_centerHorizontal="true"
                                 android:background="@android:color/transparent"
                                 android:fontFamily="@font/dareahand"
+                                android:importantForAutofill="no"
+                                android:inputType="text"
+                                android:paddingHorizontal="8dp"
+                                android:singleLine="true"
                                 android:text="@={viewModel.title}"
                                 android:textColor="@color/black"
-                                android:textSize="22sp"
+                                android:textSize="22dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
                                 tools:text="평온" />
-                        </RelativeLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <EditText
                             android:id="@+id/edit_diary_message"
@@ -128,13 +138,12 @@
                             android:background="@android:color/transparent"
                             android:fontFamily="@font/dareahand"
                             android:gravity="center"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
                             android:text="@={viewModel.content}"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
-                            tools:text="message">
-
-                            <requestFocus />
-                        </EditText>
+                            android:textSize="14dp"
+                            tools:text="message" />
                     </LinearLayout>
                 </RelativeLayout>
             </ScrollView>

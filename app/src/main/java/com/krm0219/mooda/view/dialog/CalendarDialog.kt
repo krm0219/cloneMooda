@@ -62,7 +62,7 @@ class CalendarDialog(val viewModel: DiaryViewModel, private val data: List<Calen
         setPosition(viewModel.calendarPosition.value!!)
     }
 
-    fun setPosition(position: Int) {
+    private fun setPosition(position: Int) {
 
         binding.position = position
         binding.recyclerviewCalendar.scrollToPosition(position)
@@ -70,6 +70,6 @@ class CalendarDialog(val viewModel: DiaryViewModel, private val data: List<Calen
 
     fun shakeAnimation() {
 
-        binding.layoutDialogCalendar.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_shake))
+        binding.layoutDialogCalendar.startAnimation(AnimationUtils.loadAnimation(context, R.anim.anim_shake1))
     }
 }

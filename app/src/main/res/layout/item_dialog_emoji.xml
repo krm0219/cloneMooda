@@ -37,7 +37,7 @@
                 android:onClick="@{()->viewModel.clickEmoji(position)}"
                 app:clicked="@{clickedPosition}"
                 app:emoji="@{position}"
-                tools:background="@drawable/gamttoek_2" />
+                tools:background="@drawable/gamtteok_2" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

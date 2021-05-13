@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="SpUsage">
 
     <data>
 
@@ -49,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{String.valueOf(diary.formatDay)}"
                     android:textColor="@color/black"
-                    android:textSize="26sp"
+                    android:textSize="26dp"
                     tools:text="15" />
 
                 <TextView
@@ -58,7 +59,7 @@
                     android:layout_marginStart="8dp"
                     android:text="@{diary.getDayString}"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     tools:text="Mon" />
             </LinearLayout>
 
@@ -75,16 +76,37 @@
                     android:layout_width="140dp"
                     android:layout_height="120dp"
                     app:imageEmoji="@{diary.emoji}"
-                    tools:background="@drawable/gamttoek_1" />
+                    tools:background="@drawable/gamtteok_1" />
 
-                <TextView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@{diary.title}"
-                    android:textColor="@color/black"
-                    android:textSize="22sp"
-                    tools:text="평온" />
+                    android:layout_marginTop="16dp">
+
+
+                    <ImageView
+                        android:id="@+id/img_diary_highlighter"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/img_bottom_line"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/text_diary_title"
+                        app:layout_constraintStart_toStartOf="@id/text_diary_title" />
+
+                    <TextView
+                        android:id="@+id/text_diary_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:text="@{diary.title}"
+                        android:textColor="@color/black"
+                        android:textSize="22dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="평온" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -93,7 +115,7 @@
                     android:gravity="center"
                     android:text="@{diary.message}"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </LinearLayout>
         </RelativeLayout>
 

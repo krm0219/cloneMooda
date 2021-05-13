@@ -2,6 +2,7 @@ package com.krm0219.mooda.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.krm0219.mooda.data.MonthData
 import com.krm0219.mooda.data.room.DiaryData
@@ -24,9 +25,15 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     val monthPosition: MutableLiveData<Int>
         get() = _monthPosition
 
+
     private val _addEvent = MutableLiveData<Event<Int>>()
     val addEvent: MutableLiveData<Event<Int>>
         get() = _addEvent
+
+    private val _closeEvent = MutableLiveData<Event<Int>>()
+    val closeEvent: MutableLiveData<Event<Int>>
+        get() = _closeEvent
+
 
     private val _itemClickEvent = MutableLiveData<Event<Long>>()
     val itemClickEvent: MutableLiveData<Event<Long>>
@@ -101,6 +108,11 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         _addEvent.value = Event(1)
     }
 
+    fun dialogClose(position: Int) {
+
+        _closeEvent.value = Event(position)
+    }
+
 
     @SuppressLint("SimpleDateFormat")
     fun setMonthPosition(id: Long) {
@@ -125,7 +137,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
             _developerEvent.value = Event(true)
         } else {
             clickDeveloper++
+            Log.e("krm0219", "  click Developer $clickDeveloper")
         }
-
     }
 }
